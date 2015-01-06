@@ -1,0 +1,34 @@
+diretórios:
+
+-README.md
+-makefile
+-script
++modelChecking
+	-ModelChecking.h
+	-ModelChecking.cpp
+	-Formula.h
+	-Formula.cpp
+	-Estado.h
+	-Estado.cpp
+	-Configuracao.h
+	-Configuracao.cpp
++read
+	-scanner.h
+	-scanner.c
+	-Leitor.h
+	-Leitor.cpp
++lib
+	-VisitTree.h
+	-VisitTree.cpp
++refine
+	-RefineGame.h
+	-RefineGame.cpp
++parserFiles
+	-grammarFormulas.tab.c
+	-grammarFormulas.y
+	-lexicoFormulas.lex
++home
+	-main.cpp
+	-refine[toBeCreated]
+	-model.jd[toBeCreated]
+	-property.jd[toBeCreated]
