@@ -14,37 +14,38 @@ LDFLAGS= -g -o
 all: grammar lexic parser
 
 grammar:
-	bison grammarFormulas.y
+	cd parserFiles; bison grammarFormulas.y
 
 lexic:
-	flex lexicoFormulas.lex
+	cd parserFiles; flex lexicoFormulas.lex
 
 parser: main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o
-	$(CC) main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o -o parser
+	$(CC) home/main.o modelChecking/Configuracao.o modelChecking/Estado.o modelChecking/Formula.o read/Leitor.o modelChecking/ModelChecking.o refine/RefineGame.o lib/VisitTree.o -o parser
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) main.cpp
+# agora temos que referencias os includes internos seguindo o novo sistema de diretórios
+main.o: home/main.cpp
+	cd home; $(CC) $(CFLAGS) main.cpp
 
 Configuracao.o: Configuracao.cpp
-	$(CC) $(CFLAGS) Configuracao.cpp
+	cd modelChecking; $(CC) $(CFLAGS) Configuracao.cpp
 
 Estado.o: Estado.cpp
-	$(CC) $(CFLAGS) Estado.cpp
+	cd modelChecking; $(CC) $(CFLAGS) Estado.cpp
 
 Formula.o: Formula.cpp
-	$(CC) $(CFLAGS) Formula.cpp
+	cd modelChecking; $(CC) $(CFLAGS) Formula.cpp
 
 Leitor.o: Leitor.cpp
-	$(CC) $(CFLAGS) Leitor.cpp
+	cd read; $(CC) $(CFLAGS) Leitor.cpp
 
 ModelChecking.o: ModelChecking.cpp
-	$(CC) $(CFLAGS) ModelChecking.cpp
+	cd modelChecking; $(CC) $(CFLAGS) ModelChecking.cpp
 
 RefineGame.o: RefineGame.cpp
-	$(CC) $(CFLAGS) RefineGame.cpp
+	cd refine; $(CC) $(CFLAGS) RefineGame.cpp
 
 VisitTree.o: VisitTree.cpp
-	$(CC) $(CFLAGS) VisitTree.cpp
+	cd lib; $(CC) $(CFLAGS) VisitTree.cpp
 
 clean:
 	rm -rf *o parser
