@@ -36,71 +36,71 @@
 %type <est> estado
 %type <litneg> litNeg
 %type <listLit> listaLiteral
-%left OR AND 
+%left OR AND
 
 
-%% 
+%%
 
 inicio : formula estados transicoes{}
 
-formula : 	LITERAL { principal = new FormulaLiteral(*$1, true); 
+formula : 	LITERAL { principal = new FormulaLiteral(*$1, true);
                              //cout << principal->toStr() + "TTTTT" << endl;
-                           $$ = principal; }                           
-                |VARIAVEL { principal = new FormulaVariavel(*$1); 
+                           $$ = principal; }
+                |VARIAVEL { principal = new FormulaVariavel(*$1);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal; }
                 | formula AND formula {
-                            principal = new FormulaBinaria(C_AND, $3,$1); 
+                            principal = new FormulaBinaria(C_AND, $3,$1);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                 |formula OR formula {
-                            principal = new FormulaBinaria(C_OR, $3,$1); 
+                            principal = new FormulaBinaria(C_OR, $3,$1);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                 | LPAREN formula RPAREN {
                             principal = $2;
                             $$ = principal;
-                                
+
                             }
                 | MAXPT VARIAVEL POINT LPAREN formula RPAREN {
-                            principal = new FormulaPontoFixo(C_MAXPT, $5, *$2); 
+                            principal = new FormulaPontoFixo(C_MAXPT, $5, *$2);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                 | MINPT VARIAVEL POINT LPAREN formula RPAREN {
-                            principal = new FormulaPontoFixo(C_MINPT, $5, *$2); 
+                            principal = new FormulaPontoFixo(C_MINPT, $5, *$2);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                 | EX formula  {
-                            principal = new FormulaPrefixa(C_EX, $2); 
+                            principal = new FormulaPrefixa(C_EX, $2);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                 | AX formula  {
-                            principal = new FormulaPrefixa(C_AX, $2); 
+                            principal = new FormulaPrefixa(C_AX, $2);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
                  | NOT LITERAL  {
-                            principal = new FormulaLiteral(*$2, false); 
+                            principal = new FormulaLiteral(*$2, false);
                              //cout << principal->toStr() + "TTTTT" << endl;
                            $$ = principal;
-                                
+
                             }
 
 
 estados : estado estados {}
            | estado {}
-estado: ESTADO LPAREN listaLiteral RPAREN {Estado *e = new Estado(*$1,*$3); 
+estado: ESTADO LPAREN listaLiteral RPAREN {Estado *e = new Estado(*$1,*$3);
                                         estadosLidos.push_back(*e);
                                         }
 
@@ -132,7 +132,7 @@ transicao : LPAREN ESTADO VIRG ESTADO RPAREN DBPOINT PLUS      {   TransicaoTemp
                                                         t->est2 = *$4;
                                                         t->tipo = MAY;
                                                         transicoes.push_back(*t);
-                                                    }                                                    
+                                                    }
 %%
 
 void yyerror(const char *s) {

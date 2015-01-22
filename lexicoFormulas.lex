@@ -24,70 +24,70 @@ NOT "not"
 %%
 
 [ \t\n]+          /* eat up whitespace */
-"." { 
-	return TOKEN(POINT);	
+"." {
+	return TOKEN(POINT);
         }
 
-{LITERAL} { 
+{LITERAL} {
            SAVE_TOKEN ;
             return LITERAL;
           }
 
-{MAXPT} { 
+{MAXPT} {
             return TOKEN(MAXPT);
-			
+
         }
 
-{MINPT} { 
+{MINPT} {
             return TOKEN(MINPT);
         }
 
-{OR} { 
+{OR} {
 	return TOKEN(OR);
         }
 
-{AND} { 
+{AND} {
             return TOKEN(AND);
         }
 
-{NOT} { 
-	return TOKEN(NOT);		
+{NOT} {
+	return TOKEN(NOT);
         }
 
-"AX" { 
+"AX" {
         return TOKEN(AX);
         }
 
-"EX"	{ 
-	return TOKEN(EX);		
+"EX"	{
+	return TOKEN(EX);
         }
 
-{VARIAVEL} { 
+{VARIAVEL} {
             SAVE_TOKEN ;
             return VARIAVEL;
         }
 
-"(" { 
-	return TOKEN(LPAREN);		
+"(" {
+	return TOKEN(LPAREN);
         }
 
-")" { 
-	return TOKEN(RPAREN);				
+")" {
+	return TOKEN(RPAREN);
         }
 
-"," { 
-	return TOKEN(VIRG);				
+"," {
+	return TOKEN(VIRG);
         }
 
-"+" { 
-	return TOKEN(PLUS);				
+"+" {
+	return TOKEN(PLUS);
         }
-"-" { 
-	return TOKEN(MINUS);				
+"-" {
+	return TOKEN(MINUS);
         }
 
-":" { 
-	return TOKEN(DBPOINT);				
+":" {
+	return TOKEN(DBPOINT);
         }
 
 [0-9]+[a-zA-Z0-9]+ {SAVE_TOKEN ;
