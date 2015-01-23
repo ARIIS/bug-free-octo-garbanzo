@@ -1,12 +1,12 @@
-/* 
+/*
  * File:   RefineGame.cpp
  * Author: jan
- * 
+ *
  * Created on December 10, 2013, 4:58 PM
  */
 
-#include "RefineGame.h"
-#include "ModelChecking.h"
+#include "../refine/RefineGame.h"
+#include "../modelChecking/ModelChecking.h"
 
 RefineGame::RefineGame(Arena *arena, int numEstadosModelo) {
     this->modificationsList = *(new list<SetOperations>);
@@ -64,7 +64,7 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                 transConf = new Configuracao::TransicaoConfig;
                 transConf->destino = it2->destino;
                 transConf->isMust = it2->isMust;
-                tFalha.destino = transConf; //&(*it2);                
+                tFalha.destino = transConf; //&(*it2);
                 testemunhasDeFalha.push_back(tFalha);
                 list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
                 itAux--;
@@ -77,7 +77,7 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                     transConf = new Configuracao::TransicaoConfig;
                     transConf->destino = it2->destino;
                     transConf->isMust = it2->isMust;
-                    tFalha.destino = transConf; //&(*it2);                
+                    tFalha.destino = transConf; //&(*it2);
                     testemunhasDeFalha.push_back(tFalha);
                     list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
                     itAux--;
@@ -105,7 +105,7 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                     transConf->isMust = it2->isMust;
                     tFalha.destino = transConf;
 
-                    //cout << " ++++++++++++++++++++++++++++++++++++++++  " << tFalha.destino->destino->toStr() << endl; 
+                    //cout << " ++++++++++++++++++++++++++++++++++++++++  " << tFalha.destino->destino->toStr() << endl;
                     testemunhasDeFalha.push_back(tFalha);
                     list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
                     itAux--;
@@ -138,10 +138,10 @@ void RefineGame::insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator it
         TabelaConfigsDeFalhaRelacionadas tbfr = this->tabelaFalhasRelacionadas[tf.destino->destino->getNumEstado()];
         set<FalhasLiteral, bool(*)(FalhasLiteral, FalhasLiteral) > flTemp =
                 this->tabelaFalhasRelacionadas[tf.destino->destino->getNumEstado()].literaisDeFalha;
-        //        
+        //
         set<FalhasLiteral, bool(*)(FalhasLiteral, FalhasLiteral)>::iterator itLit =
                 flTemp.find(fl);
-        //               
+        //
         if (itLit == flTemp.end()) {
             fl.testemunhasFalhasRelacionadas = *(new listItTestFail);
             fl.testemunhasFalhasRelacionadas.push_back(itf);
@@ -172,7 +172,7 @@ void RefineGame::insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator it
         } else {
             setIt->transicoes.push_back(tf.destino);
             setIt->testemunhasTransicoesRelacionadas.push_back(itf);
-            // cout << " ++++++++++++++++++++++++++++++++++++++++  " << tf.destino->destino->toStr() << endl; 
+            // cout << " ++++++++++++++++++++++++++++++++++++++++  " << tf.destino->destino->toStr() << endl;
         }
 
     }
@@ -180,7 +180,7 @@ void RefineGame::insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator it
 }
 
 void RefineGame::printRelatedFailTable(list<TestemunhaDeFalha> testemunhas) {
- 
+
 
     for (list<TestemunhaDeFalha>::iterator it = testemunhas.begin();
             it != testemunhas.end(); it++) {
@@ -204,7 +204,7 @@ void RefineGame::startRefine() {
             itEst != modeloFromArena->end(); itEst++) {
         this->modelo.push_back(&(*itEst));
     }
-    
+
     //printRelatedFailTable(this->testemunhasDeFalha);
 
     for (list<TestemunhaDeFalha>::iterator itFails = this->testemunhasDeFalha.begin();
@@ -223,17 +223,17 @@ void RefineGame::startRefine() {
 
     //cout << "CONCLUIDO" << endl;
     int i = 0;
-//    for(list<SetOperations>::iterator it = this->modificationsList.begin() ; 
+//    for(list<SetOperations>::iterator it = this->modificationsList.begin() ;
 //            it != this->modificationsList.end() ; it++){
-//        
+//
 //        cout << "X" << i << endl;
 //        cout << endl;
-//        
+//
 //        it->print();
-//        
+//
 //        cout << "#############################################" << endl;
 //        i++;
-//        
+//
 //    }
 
 }
@@ -286,7 +286,7 @@ void RefineGame::refineGame(list<TestemunhaDeFalha> testemunhas, SetOperations s
     list<Estado> preparado = prepareModelToArena();
 
     //    cout << "$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
-    //    
+    //
     //        for (list<Estado>::iterator it = preparado.begin() ;
     //                it != preparado.end() ; it++){
     //            cout << (it)->toStr() << endl;
@@ -296,19 +296,19 @@ void RefineGame::refineGame(list<TestemunhaDeFalha> testemunhas, SetOperations s
 
     if (arena->getCabecasTabuleiro()[0]->getCor() == C_TRUE) {
         this->modificationsList.push_back(setOperations.copy());
-//        
+//
 //        string str ="";
         for(list<Estado*>::iterator itP = this->modelo.begin() ; itP != this->modelo.end() ;itP++){
-            cout << (*itP)->getNome() + " ( "  + (*itP)->imprimirEstado() + " )" << endl;            
+            cout << (*itP)->getNome() + " ( "  + (*itP)->imprimirEstado() + " )" << endl;
         }
-        
+
         for(list<Estado*>::iterator itP = this->modelo.begin() ; itP != this->modelo.end() ;itP++){
-                       
+
             cout << (*itP)->imprimirTransicoes() << endl;
         }
-        
-        
-        
+
+
+
         cout << "-------------------------------------------------------------------" << endl;
 //        cout << " ALTERACAO FEITA DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" << endl;
 //        setOperations.print();
@@ -420,7 +420,7 @@ void RefineGame::undoOperation(list<Estado*> modelo, OperationStruct operation) 
                     }
                 }
             }
-        }        
+        }
     }
 
 }

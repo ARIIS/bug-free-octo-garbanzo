@@ -1,4 +1,4 @@
-#include "Formula.h"
+#include "../modelChecking/Formula.h"
 #include <iostream>
 #include <typeinfo>
 
@@ -6,7 +6,7 @@ FormulaLiteral::FormulaLiteral(string literal, bool valorLogico) {
     this->literal = *(new literalNegativo);
     this->literal.literal = literal;
     this->literal.valorLogico = valorLogico;
-    
+
 }
 
 literalNegativo FormulaLiteral::getLiteral() {
@@ -45,7 +45,7 @@ FormulaPrefixa::FormulaPrefixa(Conectivo conectivo, Formula *subFormula) {
 string FormulaPrefixa::toStr(){
     string ret = "";
     switch  (this->getConectivo()){
-        case C_AX: 
+        case C_AX:
                 ret = "AX";
                 break;
         case C_EX :
@@ -59,8 +59,8 @@ string FormulaPrefixa::toStr(){
             break;
         case C_MINPT:
             ret = "MINPT";
-            break;            
-                
+            break;
+
     }
     return ret;
 }
@@ -87,7 +87,7 @@ FormulaBinaria::FormulaBinaria(Conectivo conectivo, Formula *subFormulaDir, Form
 string FormulaBinaria::toStr(){
     string ret = "";
     switch  (this->getConectivo()){
-        case C_AND: 
+        case C_AND:
                 ret = "AND";
                 break;
         case C_OR :
@@ -128,13 +128,13 @@ string FormulaPontoFixo::getVariavel(){
 string FormulaPontoFixo::toStr(){
     string ret = "";
     switch  (this->getConectivo()){
-        case C_MINPT: 
+        case C_MINPT:
                 ret = "MINPT";
                 break;
         case C_MAXPT:
                ret = "MAXPT";
-               break;   
-                
+               break;
+
     }
     return ret + " " + this->getVariavel();
 }

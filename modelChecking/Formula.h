@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 
-#include "Estado.h"
+#include "../modelChecking/Estado.h"
 
 using namespace std;
 
@@ -29,10 +29,10 @@ public:
     virtual string toStr(){
         return "afv";
     }
-    
+
     virtual list<Formula*> getFilhos () {
         return *(new list<Formula*>);
-        
+
     }
 
 };
@@ -99,10 +99,10 @@ private:
 
 public:
     FormulaPontoFixo(Conectivo conectivo, Formula *subFormula, string variavel);
-    
+
     string getVariavel();
     string toStr();
-    
+
 
 };
 
