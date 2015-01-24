@@ -1,9 +1,10 @@
 # This file is part of Refiner Algorithm KMTS
 #
 #   Description: Makefile.
-#   Author: Marino Souza <@marinofull>
+#   Author: Marino Souza [intmarinoreturn0@gmail.com] <@marinofull>
 #   Date: 20 - 01 - 2015
 #
+
 #syntax
 #
 # target: dependencies
@@ -20,66 +21,67 @@
 # flex lexicoFormulas.lex
 # g++ -g -o parser *.cpp
 
-# Marvin OS project example:
-# boot0.bin: src/boot/boot0.asm
-#   nasm src/boot/boot0.asm -f bin -I src/boot/ -o bin/boot0.bin
-# bin/boot0.bin: src/boot/boot0.asm
-#   nasm $< -f bin -I src/boot/ -o $@
+# Marvin OS project example
+# {
+	# commit 883ef6021dcb87241827c7a1d79569b31d736027, diffview Makefile:
+	# 26 -boot0.bin: mkbin
+	# 27 -	nasm src/boot/boot0.asm -f bin -I src/boot/ -o bin/boot0.bin
+	# 35 +bin/boot0.bin: src/boot/boot0.asm
+	# 36 +	nasm $< -f bin -I src/boot/ -o $@
+
+	# commit 36ed6176d622c9c9f6eee336d08a53120d092993, Makefile:
+	# 64 %.o: %.c ${HEADERS}
+	# 65 	$(CC) -o $@ -c $< $(INC_DIRS) $(CFLAGS)
+# }
 
 CC=g++
 CFLAGS= -c -Wall
 LDFLAGS= -g -o
 
-all: grammarlexic refiner
+all: grammarlexic mkbin refiner
 
 grammarlexic: parserFiles/grammarFormulas.tab.c parserFiles/scanner
-
-# grammar:
-# 	cd parserFiles; bison grammarFormulas.y
 
 parserFiles/grammarFormulas.tab.c: parserFiles/grammarFormulas.y
 	bison $<
 	mv $@ read
 
-# lexic:
-# 	cd parserFiles; flex lexicoFormulas.lex
-
 parserFiles/scanner: parserFiles/lexicoFormulas.lex
 	flex $<
 	mv scanner.* read
 
-refiner: home/main.o modelChecking/Configuracao.o modelChecking/Estado.o modelChecking/Formula.o read/Leitor.o modelChecking/ModelChecking.o refine/RefineGame.o lib/VisitTree.o
+mkbin:
+	mkdir -p bin/
+
+refiner: bin/main.o bin/Configuracao.o bin/Estado.o bin/Formula.o bin/Leitor.o bin/ModelChecking.o bin/RefineGame.o bin/VisitTree.o
 	$(CC) $^ -o refiner
 
-# agora temos que referencias os includes internos seguindo o novo sistema de diretórios
-home/main.o: home/main.cpp
+bin/main.o: home/main.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-modelChecking/Configuracao.o: modelChecking/Configuracao.cpp
+bin/Configuracao.o: modelChecking/Configuracao.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-modelChecking/Estado.o: modelChecking/Estado.cpp
+bin/Estado.o: modelChecking/Estado.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-modelChecking/Formula.o: modelChecking/Formula.cpp
+bin/Formula.o: modelChecking/Formula.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-read/Leitor.o: read/Leitor.cpp
+bin/Leitor.o: read/Leitor.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-modelChecking/ModelChecking.o: modelChecking/ModelChecking.cpp
+bin/ModelChecking.o: modelChecking/ModelChecking.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-refine/RefineGame.o: refine/RefineGame.cpp
+bin/RefineGame.o: refine/RefineGame.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-lib/VisitTree.o: lib/VisitTree.cpp
+bin/VisitTree.o: lib/VisitTree.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf *o refiner
+	rm -rf bin/*.o refiner
 
 cleanAll:
-	rm -rf *o refiner read/scanner.* read/*.tab.c
-# lccgomes@gmail.com
-# sbpc.net sociedade brasileira pelo progresso da ciência
+	rm -rf bin/*.o refiner read/scanner.* read/*.tab.c

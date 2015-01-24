@@ -1,1 +1,6 @@
+refiner
+read/grammarFormulas.tab.c
+read/scanner.h
+read/scanner.c
+bin/*.o
 .project

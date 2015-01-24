@@ -1,8 +1,15 @@
 diretórios:
 
 -README.md
+-LICENSE		[toBeCreated]
 -makefile
--script
++bin
+	-*.o
++doc
+	-*.txt		[example]
+	-*.pdf		[example]
+	-*.tex		[example]
+	-*.latex	[example]
 +modelChecking
 	-ModelChecking.h
 	-ModelChecking.cpp
@@ -29,6 +36,6 @@ diretórios:
 	-lexicoFormulas.lex
 +home
 	-main.cpp
-	-refiner[toBeCreated]
-	-model.jd[toBeCreated]
-	-property.jd[toBeCreated]
+	-refiner		[toBeCreated]
+	-model.jd		[toBeCreated]
+	-property.jd	[toBeCreated]
