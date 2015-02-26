@@ -1,16 +1,41 @@
-<RefinamentodeModelosKMTS>
-    Copyright (C) 2014  Jandson Santos Ribeiro Santos (jandsonsantos@gmail.com)
+NomeDoProjeto
+=============
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+breve descrição neste parágrafo, ou pode ser uma descrição um pouco mais gordinha tbm, lalalalalala.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+* [Contribua com o projeto](#Contribua-com-o-projeto)
+* [Dependêcias](#Dependêcias)
+* [Instalação](#Instalação)
+* [Time de Desenvolvimento](#Time-de-Desenvolvimento)
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+###Contribua com o projeto
+
+
+* Fork o projeto
+* Clone em sua máquina o repositório que você acabou de dar fork
+* Adicione o projeto original como upstream: `git remote add  upstream https://github.com/JandsonRibeiro/RefinamentoDeModelosKMTS`
+* `git fetch upstream`
+* `git merge upstream/master`
+* Crie uma branch: `git checkout -b your_branch_name`
+* Faça as alterações
+* Commit as alterações e dê push para sua branch
+* Crie um `Pull Request`
+
+###Dependêcias
+
+* g++
+* bison
+* flex
+
+###Instalação
+
+1)`make`;
+
+2)`parser entrada`
+
+###Time de Desenvolvimento
+
+* Jandson Ribeiro
+* [Marino Hohenheim](mailto:intmarinoreturn0@gmail.com) [@Marinofull](https://github.com/Marinofull)
+* Miguel Dias
