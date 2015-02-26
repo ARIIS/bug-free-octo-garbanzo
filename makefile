@@ -12,14 +12,8 @@
 #
 # UPCASEWORD= means constant expression
 #
-# $ ^ is substituted with all of the target ’ s dependancy files
-# $ < is the first dependancy and $@ is the target files
-
-# ---Some comments of help and learning---
-#
-# bison grammarFormulas.y
-# flex lexicoFormulas.lex
-# g++ -g -o parser *.cpp
+# $^ is substituted with all of the target ’ s dependancy files
+# $< is the first dependancy and $@ is the target files
 
 # Marvin OS project example
 # {
@@ -37,24 +31,24 @@
 CC=g++
 CFLAGS= -c -Wall
 LDFLAGS= -g -o
+SOURCES=home/main.cpp modelChecking/Configuracao.cpp modelChecking/Estado.cpp modelChecking/Formula.cpp read/Leitor.cpp modelChecking/ModelChecking.cpp refine/RefineGame.cpp lib/VisitTree.cpp
+GRAMMAR=
+OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
+EXECUTABLE=refiner
 
-all: grammarlexic mkbin refiner
 
-grammarlexic: parserFiles/grammarFormulas.tab.c parserFiles/scanner
+all: grammarlexic bin/ $(EXECUTABLE)
 
-parserFiles/grammarFormulas.tab.c: parserFiles/grammarFormulas.y
-	bison $<
-	mv $@ read
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $^ -o $@
 
-parserFiles/scanner: parserFiles/lexicoFormulas.lex
-	flex $<
-	mv scanner.* read
-
-mkbin:
-	mkdir -p bin/
-
-refiner: bin/main.o bin/Configuracao.o bin/Estado.o bin/Formula.o bin/Leitor.o bin/ModelChecking.o bin/RefineGame.o bin/VisitTree.o
-	$(CC) $^ -o refiner
+# Regular Expression very OverPower
+# %.o: %.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
+# #
+# the command above can replace the eight commands bellow.
+# if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
+#
 
 bin/main.o: home/main.cpp
 	$(CC) $(CFLAGS) $< -o $@
@@ -80,8 +74,23 @@ bin/RefineGame.o: refine/RefineGame.cpp
 bin/VisitTree.o: lib/VisitTree.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-clean:
-	rm -rf bin/*.o refiner
+# every command above belongs to the tree of "all" command.
+# from here, the commands below are independents.
 
-cleanAll:
-	rm -rf bin/*.o refiner read/scanner.* read/*.tab.c
+grammarlexic: read/grammarFormulas.tab.c read/scanner.c
+
+read/grammarFormulas.tab.c: parserFiles/grammarFormulas.y
+	bison $<
+	mv parserFiles/*.tab.c read
+
+read/scanner.c: parserFiles/lexicoFormulas.lex
+	flex $<
+	mv scanner.* read
+
+clean: cleanBin cleanGrammar
+
+cleanBin:
+	rm -rf bin/*.o $(EXECUTABLE)
+
+cleanGrammar:
+	rm -rf read/scanner.* read/*.tab.c
