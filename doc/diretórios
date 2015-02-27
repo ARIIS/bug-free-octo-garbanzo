@@ -1,8 +1,15 @@
 diretórios:
 
 -README.md
+-LICENSE		[toBeCreated]
 -makefile
--script
++bin
+	-*.o
++doc
+	-*.txt		[example]
+	-*.pdf		[example]
+	-*.tex		[example]
+	-*.latex	[example]
 +modelChecking
 	-ModelChecking.h
 	-ModelChecking.cpp
@@ -13,6 +20,7 @@ diretórios:
 	-Configuracao.h
 	-Configuracao.cpp
 +read
+	-grammarFormulas.tab.c
 	-scanner.h
 	-scanner.c
 	-Leitor.h
@@ -24,11 +32,10 @@ diretórios:
 	-RefineGame.h
 	-RefineGame.cpp
 +parserFiles
-	-grammarFormulas.tab.c
 	-grammarFormulas.y
 	-lexicoFormulas.lex
 +home
 	-main.cpp
-	-refine[toBeCreated]
-	-model.jd[toBeCreated]
-	-property.jd[toBeCreated]
+	-refiner		[toBeCreated]
+	-model.jd		[toBeCreated]
+	-property.jd	[toBeCreated]

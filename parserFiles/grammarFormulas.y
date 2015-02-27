@@ -2,9 +2,9 @@
    	#include <iostream>
    	#include <stdio.h>
    	#include <stdlib.h>
-	#include "Formula.h"
+	#include "../modelChecking/Formula.h"
 	#include <string>
-        #include "Estado.h"
+        #include "../modelChecking/Estado.h"
         #include <set>
 
 	using namespace std;

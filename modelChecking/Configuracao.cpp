@@ -1,8 +1,8 @@
-#include "Configuracao.h"
-#include "VisitTree.h"
+#include "../modelChecking/Configuracao.h"
+#include "../lib/VisitTree.h"
 #include <typeinfo>
 #include <vector>
-#include "Estado.h"
+#include "../modelChecking/Estado.h"
 #include <sstream>
 #include <iostream>
 #include <stdlib.h>
@@ -145,7 +145,7 @@ int Configuracao::getIntex(){
 }
 
 void Configuracao::setIndex(int index){
-    this->index = index;             
+    this->index = index;
 }
 
 literalNegativo Configuracao::getLiteralNegativo() {
@@ -225,7 +225,7 @@ string Configuracao::toStr() {
     }
     ss << "node(" << this->numeroNome << "::" << this->numEstado << ")" << " " << jogador
             << "{" << conectivo << "}";
-    
+
 
     string final;
 
@@ -247,9 +247,9 @@ int Configuracao::getNumEstado() {
 }
 
 void Arena::marcarComponentesConexos() {
-        
+
     list<Configuracao*> *pilha = (new list<Configuracao*>);
-    
+
     this->index = 0;
 
     for (list<Configuracao*>::iterator it = this->matrizConfiguracoes.begin();
@@ -263,7 +263,7 @@ void Arena::marcarComponentesConexos() {
     for (list<Configuracao*>::iterator it = this->matrizConfiguracoes.begin();
             it != this->matrizConfiguracoes.end(); it++) {
         if ( !(*it)->wasVisited()) {
-            //pilha->push_back(*it);        
+            //pilha->push_back(*it);
             componenteConexas(*it, pilha);
         }
     }
@@ -301,7 +301,7 @@ void Arena::componenteConexas(Configuracao* configuracao, list<Configuracao*> *p
         Componente *comp = new Componente(configuracao->getIntex());
 
         do {
-            pilha->back()->setNumeroComponente(comp->getNumComponente());            
+            pilha->back()->setNumeroComponente(comp->getNumComponente());
             pilha->back()->setIntoStack(false);
             comp->addConfiguracao(pilha->back());
             pilha->pop_back();
@@ -492,7 +492,7 @@ void Arena::constroiArena(vector<Configuracao*> configuracoes, Formula *form) {
         vector<Configuracao*> *configs;
         if (typeid (*(form->getFilhos().front())) == typeid (FormulaVariavel)) {
 
-            //olhar para modelo e fazer ligacoes às variaveis 
+            //olhar para modelo e fazer ligacoes às variaveis
 
             FormulaVariavel *fv = dynamic_cast<FormulaVariavel*> (form->getFilhos().front());
 
@@ -701,7 +701,7 @@ void Arena::printArenaSimples() {
                 cout << "(?)";
             }
 
-            //            if (it2->destino->getCor() == C_TRUE 
+            //            if (it2->destino->getCor() == C_TRUE
             //                    || it2->destino->getCor() == C_FALSE
             //                    || it2->destino->getCor() == C_INDEF) {
             //                cout << fim;

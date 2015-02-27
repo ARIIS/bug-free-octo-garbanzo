@@ -1,8 +1,8 @@
 #ifndef CONFIGURACAO_H
 #define	CONFIGURACAO_H
 
-#include "Formula.h"
-#include "Estado.h"
+#include "../modelChecking/Formula.h"
+#include "../modelChecking/Estado.h"
 #include <vector>
 #include <map>
 #include <sstream>
@@ -39,7 +39,7 @@ private:
     int numConfigsColoridas;
     bool intoStack;
     bool visited;
-    
+
     int index;
 
 public:
@@ -70,18 +70,18 @@ public:
     int getNumEstado();
 
     literalNegativo getLiteralNegativo();
-    
+
     bool isLiteral();
     bool isVariavel();
     bool isMaxFixPoint();
     bool isMinFixPoint();
-    
-    bool isIntoStack();    
+
+    bool isIntoStack();
     void setIntoStack(bool valor);
-    
+
     bool wasVisited();
     void setVisited(bool value);
-    
+
     int getIntex();
     void setIndex(int index);
 
@@ -104,11 +104,11 @@ public:
         this->visitado = false;
         this->numConfiguracoesColoridas = 0;
     }
-    
+
     void incrementNumConfiguracoesColoridos(){
         this->numConfiguracoesColoridas++;
     }
-    
+
     void decrementNumConfiguracoesColoridos(){
         this->numConfiguracoesColoridas--;
     }
@@ -117,7 +117,7 @@ public:
         return this->configuracoes;
     }
 
-    void addConfiguracao(Configuracao *configuracao) {        
+    void addConfiguracao(Configuracao *configuracao) {
         this->configuracoes.push_back(configuracao);
     }
 
@@ -168,11 +168,11 @@ public:
             (*it)->setNumeroComponente(num);
         }
     }
-    
+
     int getNumConfiguracoesColoridas(){
-        
+
         int cont = 0 ;
-        
+
         for(list<Configuracao*>::iterator it = this->configuracoes.begin() ;
                 it != this->configuracoes.end() ; it++){
             if((*it)->getCor() == C_TRUE || (*it)->getCor() == C_FALSE ||
@@ -180,9 +180,9 @@ public:
                 cont++;
             }
         }
-        
+
         return cont;
-        
+
         //return this->numConfiguracoesColoridas;
     }
 
@@ -191,9 +191,9 @@ public:
 
 class Arena {
 private:
-       
+
     Formula *formula;
-    
+
     list<Estado> modelo;
     vector<Configuracao*> cabecasTabuleiro; //apontadores para as raizes de cada Si X Psi
     // ou seja, raiz de cada arvore de estado do tabuleiro
@@ -212,7 +212,7 @@ private:
 
     void marcarComponentesConexos();
     void componenteConexas(Configuracao *configuracao, list<Configuracao*> *pilha);
-    
+
     int minBetwConfigs(int c1, int c2);
 
 
@@ -223,27 +223,27 @@ public:
     list<Componente*> getComponentes();
 
     Estado* estadoNaPos(int posEstate);
-    
+
     Conectivo getTipoVariavel(string variavel);
-    
+
     void printColorsResult();
-    
+
     void printArenaSimples();
     Formula *getForm();
-    
+
     list<Estado>* getModelo();
     int namesToNumEstates(string nameState);
-    
+
     list<Configuracao*> getMatrizConfiguracao();
     vector<Configuracao*> getCabecasTabuleiro();
-    
+
     set<Configuracao*, bool(*)(Configuracao*,Configuracao*)> getIndefinedConfigs();
-    
+
         static bool compConfigs(Configuracao *config1, Configuracao *confg2){
         return config1->getNumNome() < confg2->getNumNome();
     }
 
-    
+
 
 
 };

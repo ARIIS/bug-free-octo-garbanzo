@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   LeitorFormulas.h
  * Author: jandson
  *
@@ -11,19 +11,19 @@
 #include <string>
 #include <iostream>
 
-#include "Formula.h"
-#include "Estado.h"
+#include "../modelChecking/Formula.h"
+#include "../modelChecking/Estado.h"
 
 using namespace std;
 
 class Leitor{
-    
+
 public :
     Leitor(string caminho);
     Formula* lerFormulas();
     list<Estado> lerEstados();
-    
-    
+
+
 };
 
 
