@@ -23,6 +23,13 @@ Este projeto tem como objetivo auxiliar o projetista de software logo nas fases 
 * Commit as alterações e dê push para sua branch
 * Crie um `Pull Request`
 
+Para manter seu fork sincronizado:
+
+* `git fetch upstream`
+* `git checkout master`
+* `git merge upstream/master`
+* [leia mais](https://help.github.com/articles/syncing-a-fork/)
+
 ###Dependêcias
 
 * g++
@@ -31,9 +38,9 @@ Este projeto tem como objetivo auxiliar o projetista de software logo nas fases 
 
 ###Instalação
 
-1)`make`;
+1)`make`
 
-2)`parser entrada`
+2)`./refiner input`
 
 ###Time de Desenvolvimento
 
