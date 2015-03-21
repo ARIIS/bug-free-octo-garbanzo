@@ -17,6 +17,6 @@ VertexWitness* WitnessGraph::CreateVertex(Configuracao* head, Configuracao* tail
 }
 
 void WitnessGraph::CreateEdge(Vertex* origin, Vertex* destination){
-	origin->children.push_back(destination);
-	destination->parents.push_back(origin);
+	origin->addChild(destination);
+	destination->addParent(origin);
 }

@@ -2,15 +2,12 @@
 #define	VERTEX_H
 
 #include "Configuracao.h"
+#include "Estado.h"
 #include <list>
 
 typedef enum {
 	EVA, ABELARDO
 } VertexKind;
-
-typedef enum {
-	MAY, MUST
-} TransitionKind;
 
 class Vertex{
 
@@ -27,19 +24,21 @@ public:
 	VertexKind getKind();
 	list<Vertex*> getChildren();
 	list<Vertex*> getParents();
+	void addChild(Vertex* child);
+	void addParent(Vertex* dad); 
 
-}
+};
 
 class VertexWitness: public Vertex {
 	
 	private:
 		Configuracao *tail;
-		TransitionKind transition
+		TipoTransicao transition;
 	
 	public:
-		VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TransitionKind transition);
+		VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition);
 		Configuracao* getTail();
-		TransitionKind getTransition();
+		TipoTransicao getTransition();
 };
 
 #endif

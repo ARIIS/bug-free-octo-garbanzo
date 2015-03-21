@@ -25,7 +25,15 @@ list<Vertex*> Vertex::getParents(){
 	return this->parents;
 }
 
-VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TransitionKind transition){
+void Vertex::addChild(Vertex* child){
+	this->children.push_back(child);
+}
+
+void Vertex::addParent(Vertex* dad){
+	this->parents.push_back(dad);
+}
+
+VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition){
 	this->head = head;
 	this->kind = kind;
 	this->tail = tail;
