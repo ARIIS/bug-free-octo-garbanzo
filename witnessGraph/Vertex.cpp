@@ -1,9 +1,21 @@
 #include "Vertex.h"
 
+Vertex::Vertex(){
+	this->children = *(new list<Vertex*>);
+	this->parents = *(new list<Vertex*>);
+}
 Vertex::Vertex(Configuracao* head, VertexKind kind){
 	
 	this->head = head;
 	this->kind = kind;
+	this->children = *(new list<Vertex*>);
+	this->parents = *(new list<Vertex*>);
+	
+}
+
+Vertex::Vertex(Configuracao* head){
+	
+	this->head = head;
 	this->children = *(new list<Vertex*>);
 	this->parents = *(new list<Vertex*>);
 	
@@ -15,6 +27,14 @@ Configuracao* Vertex::getHead(){
 
 VertexKind Vertex::getKind(){
 	return this->kind;
+}
+
+void Vertex::setHead(Configuracao *head){
+	this->head = head;
+}
+
+void Vertex::setKind(VertexKind kind){
+	this->kind = kind;
 }
 
 list<Vertex*> Vertex::getChildren(){
@@ -34,10 +54,16 @@ void Vertex::addParent(Vertex* dad){
 }
 
 VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition){
-	this->head = head;
-	this->kind = kind;
+	this->setHead(head);
+	this->setKind(kind);
 	this->tail = tail;
 	this->transition = transition;
-	this->children = *(new list<Vertex*>);
-	this->parents = *(new list<Vertex*>);
+	
+}
+
+VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, TipoTransicao transition){
+	this->setHead(head);
+	this->tail = tail;
+	this->transition = transition;
+	
 }

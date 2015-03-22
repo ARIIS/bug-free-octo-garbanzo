@@ -6,7 +6,7 @@
 #include <list>
 
 typedef enum {
-	EVA, ABELARDO
+	ABELARDO, EVA
 } VertexKind;
 
 class Vertex{
@@ -19,9 +19,13 @@ private:
 	
 public:
 	
+	Vertex();
+	Vertex(Configuracao* head);
 	Vertex(Configuracao* head, VertexKind kind);
 	Configuracao* getHead();
 	VertexKind getKind();
+	void setHead(Configuracao *head);
+	void setKind(VertexKind kind);
 	list<Vertex*> getChildren();
 	list<Vertex*> getParents();
 	void addChild(Vertex* child);
@@ -37,6 +41,7 @@ class VertexWitness: public Vertex {
 	
 	public:
 		VertexWitness(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition);
+		VertexWitness(Configuracao* head, Configuracao* tail, TipoTransicao transition);
 		Configuracao* getTail();
 		TipoTransicao getTransition();
 };
