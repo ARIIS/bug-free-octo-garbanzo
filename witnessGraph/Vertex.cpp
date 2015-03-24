@@ -67,3 +67,8 @@ VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, TipoTransic
 	this->transition = transition;
 	
 }
+
+/* int main(int argc , char **argv){
+	
+	return 0;
+} */

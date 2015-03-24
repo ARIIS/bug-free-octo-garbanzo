@@ -9,17 +9,20 @@ class WitnessGraph{
 	
 	private:
 		vector<Vertex*> nTV;
+		set<Configuracao*> visitados;
+		bool pertence(list<Configuracao::TransicaoConfig> conjunto, Configuracao* ci);
+		list<Vertex*> vertices;
 	
 	public:
-		list<Vertex*> vertices;
 		WitnessGraph();
 		WitnessGraph(Arena* a);
-		Vertex* CreateVertex(Configuracao* head);
-		Vertex* CreateVertex(Configuracao* head, VertexKind kind);
-		VertexWitness* CreateVertex(Configuracao* head, Configuracao* tail, TipoTransicao transition);
-		VertexWitness* CreateVertex(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition);
-		Vertex* CycleAncestor(vector<Vertex*> nTV, Configuracao* ci);
-		void CreateEdge(Vertex* origin, Vertex* destination);
+		Vertex* createVertex(Configuracao* head);
+		Vertex* createVertex(Configuracao* head, VertexKind kind);
+		VertexWitness* createVertex(Configuracao* head, Configuracao* tail, TipoTransicao transition);
+		VertexWitness* createVertex(Configuracao* head, Configuracao* tail, VertexKind kind, TipoTransicao transition);
+		Vertex* cycleAncestor(Configuracao* ci);
+		Vertex* nextVertex(Configuracao* ci, list<Configuracao::TransicaoConfig> w);
+		void createEdge(Vertex* origin, Vertex* destination);
 		 
 };
 
