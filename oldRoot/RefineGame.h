@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   RefineGame.h
  * Author: jan
  *
@@ -56,8 +56,8 @@ typedef struct {
 
     void print() {
         if (operation == OP_DEFN_LIT) {
-            cout << "DF _LIT " <<  ( (literal.valorLogico) ? " " : " not ") << 
-                    literal.literal << endl;          
+            cout << "DF _LIT " <<  ( (literal.valorLogico) ? " " : " not ") <<
+                    literal.literal << endl;
             cout << to << endl;
         } else if (operation == OP_MAY_TO_MUST) {
             cout << "MAY_TO_MUST " << literal.literal << endl;
