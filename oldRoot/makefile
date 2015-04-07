@@ -19,14 +19,17 @@ grammar:
 lexic:
 	flex lexicoFormulas.lex
 
-parser: main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o
-	$(CC) main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o -o parser
+parser: main.o Configuracao.o Arena.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o
+	$(CC) main.o Configuracao.o Arena.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o -o parser
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
 
 Configuracao.o: Configuracao.cpp
 	$(CC) $(CFLAGS) Configuracao.cpp
+
+Arena.o: Arena.cpp
+	$(CC) $(CFLAGS) Arena.cpp
 
 Estado.o: Estado.cpp
 	$(CC) $(CFLAGS) Estado.cpp
