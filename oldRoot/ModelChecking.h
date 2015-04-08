@@ -2,6 +2,7 @@
 #define	MODEL_CHECKING
 
 #include "Configuracao.h"
+#include "Componente.h"
 #include "Arena.h"
 #include <vector>
 #include <stack>

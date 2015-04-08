@@ -4,6 +4,7 @@
 #include "Formula.h"
 #include "Estado.h"
 #include "Configuracao.h"
+#include "Componente.h"
 #include <vector>
 #include <map>
 #include <sstream>

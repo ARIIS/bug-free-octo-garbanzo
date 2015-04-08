@@ -8,6 +8,7 @@
 #ifndef REFINEGAME_H
 #define	REFINEGAME_H
 
+#include "Arena.h"
 #include "Configuracao.h"
 #include "Formula.h"
 

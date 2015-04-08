@@ -87,46 +87,6 @@ public:
 
 };
 
-class Componente {
-private:
-    list<Configuracao*> configuracoes;
-    int numConfiguracoesColoridas;
-    int numComponente;
-    bool visitado;
-    vector< vector<bool> > *relacaoEntreComponenetes;
-    Conectivo testemunhaCiclo;
-
-public:
-
-    Componente(int numeroComponente);
-
-    void incrementNumConfiguracoesColoridos();
-
-    void decrementNumConfiguracoesColoridos();
-
-    list<Configuracao*> getConfiguracoes();
-
-    void addConfiguracao(Configuracao *configuracao);
-
-    string toStr();
-
-    vector< vector<bool> > * getRelacaoOrdem();
-
-    void setRelacao(vector< vector<bool> > *relacaoEntreComponenetes);
-
-    bool foiVisitado();
-
-    void setVisitado(bool value);
-
-    int getNumComponente();
-
-    void setNumComponente(int num);
-
-    int getNumConfiguracoesColoridas();
-
-
-};
-
 
 
 #endif	/* COFIGURACAO_H */
