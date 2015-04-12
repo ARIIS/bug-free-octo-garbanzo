@@ -11,6 +11,8 @@
 #include "Arena.h"
 #include "Configuracao.h"
 #include "Formula.h"
+// #include "FormulaBinaria.h"
+// #include "FormulaPrefixa.h"
 
 typedef struct {
     Configuracao *origem;

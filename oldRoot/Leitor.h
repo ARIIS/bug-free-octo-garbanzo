@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   LeitorFormulas.h
  * Author: jandson
  *
@@ -12,18 +12,24 @@
 #include <iostream>
 
 #include "Formula.h"
+#include "FormulaBinaria.h"
+#include "FormulaLiteral.h"
+#include "FormulaVariavel.h"
+#include "FormulaPrefixa.h"
+#include "FormulaPontoFixo.h"
+
 #include "Estado.h"
 
 using namespace std;
 
 class Leitor{
-    
+
 public :
     Leitor(string caminho);
     Formula* lerFormulas();
     list<Estado> lerEstados();
-    
-    
+
+
 };
 
 

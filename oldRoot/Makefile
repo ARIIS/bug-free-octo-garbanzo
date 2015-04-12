@@ -33,7 +33,10 @@ CC=g++
 CFLAGS= -c
 LDFLAGS= -g -o
 # SOURCES=home/main.cpp modelChecking/Configuracao.cpp modelChecking/Estado.cpp modelChecking/Formula.cpp modelChecking/ModelChecking.cpp read/Leitor.cpp refine/RefineGame.cpp lib/VisitTree.cpp
-SOURCES=main.cpp Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp Formula.cpp ModelChecking.cpp Leitor.cpp RefineGame.cpp VisitTree.cpp
+FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
+ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
+TREE=VisitTree.cpp VisitConfiguracao.cpp
+SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) Leitor.cpp RefineGame.cpp
 GRAMMAR=
 OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
 EXECUTABLE=refiner

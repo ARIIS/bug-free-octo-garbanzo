@@ -4,8 +4,8 @@
    	#include <stdlib.h>
 	#include "Formula.h"
 	#include <string>
-        #include "Estado.h"
-        #include <set>
+    #include "Estado.h"
+    #include <set>
 
 	using namespace std;
 

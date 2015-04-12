@@ -2,6 +2,7 @@
 
 #include "Configuracao.h"
 #include "VisitTree.h"
+#include "VisitConfiguracao.h"
 #include <typeinfo>
 #include <vector>
 #include "Estado.h"
