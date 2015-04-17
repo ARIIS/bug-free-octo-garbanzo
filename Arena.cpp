@@ -1,8 +1,8 @@
 #include "Arena.h"
 
 #include "Configuracao.h"
-#include "VisitTree.h"
-#include "VisitConfiguracao.h"
+#include "lib/VisitTree.h"
+#include "lib/VisitConfiguracao.h"
 #include <typeinfo>
 #include <vector>
 #include "Estado.h"

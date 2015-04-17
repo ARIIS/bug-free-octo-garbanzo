@@ -1,5 +1,5 @@
 #include "Configuracao.h"
-#include "VisitTree.h"
+#include "lib/VisitTree.h"
 #include <typeinfo>
 #include <vector>
 #include "Estado.h"

@@ -3,7 +3,7 @@
 #include <iostream>
 // #include "lex.yy.c"
 #include "Formula.h"
-#include "VisitTree.h"
+#include "lib/VisitTree.h"
 #include "scanner.c"
 #include "Estado.h"
 #include <map>

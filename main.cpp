@@ -8,7 +8,7 @@
 #include "FormulaPrefixa.h"
 #include "FormulaPontoFixo.h"
 
-#include "VisitTree.h"
+#include "lib/VisitTree.h"
 //#include "scanner.c"
 #include "Leitor.h"
 //#include "parser.h"

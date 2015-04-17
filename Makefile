@@ -35,7 +35,7 @@ LDFLAGS= -g -o
 # SOURCES=home/main.cpp modelChecking/Configuracao.cpp modelChecking/Estado.cpp modelChecking/Formula.cpp modelChecking/ModelChecking.cpp read/Leitor.cpp refine/RefineGame.cpp lib/VisitTree.cpp
 FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
 ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
-TREE=VisitTree.cpp VisitConfiguracao.cpp
+TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
 SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) Leitor.cpp RefineGame.cpp
 GRAMMAR=
 OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
@@ -55,6 +55,16 @@ bin/%.o: %.cpp
 # the command above can replace each ones bellow.
 # if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
 #
+
+bin/VisitTree.o: lib/VisitTree.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+bin/Path.o: lib/Path.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
 
 # bin/main.o: main.cpp
 # 	$(CC) $(CFLAGS) $< -o $@
@@ -104,10 +114,11 @@ bin/:
 
 grammarlexic: grammarFormulas.tab.c scanner.c
 
-grammarFormulas.tab.c: grammarFormulas.y
+grammarFormulas.tab.c: grammar/grammarFormulas.y
 	bison $<
+	mv grammar/$@ .
 
-scanner.c: lexicoFormulas.lex
+scanner.c: grammar/lexicoFormulas.lex
 	flex $<
 
 clean: cleanBin cleanGrammar
