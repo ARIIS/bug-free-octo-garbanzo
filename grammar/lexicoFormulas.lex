@@ -3,7 +3,7 @@
 
 %top{
 	#include <iostream>
-  #include "grammarFormulas.tab.c"
+  #include "../read/grammarFormulas.tab.c"
 
   #define SAVE_TOKEN yylval.String = new std::string(yytext, yyleng)
   #define TOKEN(t) (yylval.token = t)

@@ -11,14 +11,14 @@
 #include <string>
 #include <iostream>
 
-#include "Formula.h"
-#include "FormulaBinaria.h"
-#include "FormulaLiteral.h"
-#include "FormulaVariavel.h"
-#include "FormulaPrefixa.h"
-#include "FormulaPontoFixo.h"
+#include "../arena/Formula.h"
+#include "../arena/FormulaBinaria.h"
+#include "../arena/FormulaLiteral.h"
+#include "../arena/FormulaVariavel.h"
+#include "../arena/FormulaPrefixa.h"
+#include "../arena/FormulaPontoFixo.h"
 
-#include "arena/Estado.h"
+#include "../arena/Estado.h"
 
 using namespace std;
 

@@ -2,9 +2,9 @@
    	#include <iostream>
    	#include <stdio.h>
    	#include <stdlib.h>
-	#include "Formula.h"
+	#include "../arena/Formula.h"
 	#include <string>
-    #include "arena/Estado.h"
+    #include "../arena/Estado.h"
     #include <set>
 
 	using namespace std;

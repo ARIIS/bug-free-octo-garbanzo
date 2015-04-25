@@ -49,12 +49,15 @@ $(EXECUTABLE): $(OBJECTS)
 	# enjoy :D
 
 # Regular Expression very OverPower
-bin/%.o: %.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/%.o: %.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 # #
 # the command above can replace each ones bellow.
 # if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
 #
+
+bin/main.o: main.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 # lib folder
 bin/VisitTree.o: lib/VisitTree.cpp
@@ -65,10 +68,6 @@ bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
 
 bin/Path.o: lib/Path.cpp
 	$(CC) $(CFLAGS) $< -o $@
-
-
-# FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
-# ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
 
 # arena folder
 
@@ -84,35 +83,40 @@ bin/Configuracao.o: arena/Configuracao.cpp
 bin/Componente.o: arena/Componente.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-# bin/main.o: main.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Configuracao.o: Configuracao.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/Formula.o: arena/Formula.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Componente.o: Componente.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/FormulaBinaria.o: arena/FormulaBinaria.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Arena.o: Arena.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/FormulaLiteral.o: arena/FormulaLiteral.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Estado.o: Estado.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/FormulaVariavel.o: arena/FormulaVariavel.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Formula.o: Formula.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/FormulaPrefixa.o: arena/FormulaPrefixa.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/ModelChecking.o: ModelChecking.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/FormulaPontoFixo.o: arena/FormulaPontoFixo.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Leitor.o: Leitor.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
 
-# bin/RefineGame.o: RefineGame.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+# read folder
 
-# bin/VisitTree.o: VisitTree.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
+bin/Leitor.o: read/Leitor.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+# modelChecking folder
+
+bin/ModelChecking.o: modelChecking/ModelChecking.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+# refineGame folder
+
+bin/RefineGame.o: refineGame/RefineGame.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 # every command above belongs to the tree of "all" command.
 # from here, the commands below are independents.
@@ -130,14 +134,15 @@ bin/:
 # 	flex $<
 # 	mv scanner.* read
 
-grammarlexic: grammarFormulas.tab.c scanner.c
+grammarlexic: grammar/grammarFormulas.tab.c grammar/scanner.c
 
-grammarFormulas.tab.c: grammar/grammarFormulas.y
+grammar/grammarFormulas.tab.c: grammar/grammarFormulas.y
 	bison $<
-	mv grammar/$@ .
+	mv $@ read/
 
-scanner.c: grammar/lexicoFormulas.lex
+grammar/scanner.c: grammar/lexicoFormulas.lex
 	flex $<
+	mv scanner.* read/
 
 clean: cleanBin cleanGrammar
 
@@ -145,7 +150,7 @@ cleanBin:
 	rm -rf bin/*.o $(EXECUTABLE)
 
 cleanGrammar:
-	rm -rf scanner.* *.tab.c
+	rm -rf read/scanner.* read/*.tab.c
 
 # help
 

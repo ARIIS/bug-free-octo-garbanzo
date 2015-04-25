@@ -1,7 +1,7 @@
 #ifndef COMPONENTE_H
 #define COMPONENTE_H
 
-#include "../Formula.h"
+#include "Formula.h"
 #include "Configuracao.h"
 #include "Estado.h"
 #include <vector>

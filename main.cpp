@@ -1,20 +1,20 @@
 #include <cstdlib>
 #include <iostream>
 // #include "lex.yy.c"
-#include "Formula.h"
-#include "FormulaBinaria.h"
-#include "FormulaLiteral.h"
-#include "FormulaVariavel.h"
-#include "FormulaPrefixa.h"
-#include "FormulaPontoFixo.h"
+#include "arena/Formula.h"
+#include "arena/FormulaBinaria.h"
+#include "arena/FormulaLiteral.h"
+#include "arena/FormulaVariavel.h"
+#include "arena/FormulaPrefixa.h"
+#include "arena/FormulaPontoFixo.h"
 
 #include "lib/VisitTree.h"
 //#include "scanner.c"
-#include "Leitor.h"
+#include "read/Leitor.h"
 //#include "parser.h"
 #include "arena/Configuracao.h"
-#include "ModelChecking.h"
-#include "RefineGame.h"
+#include "modelChecking/ModelChecking.h"
+#include "refineGame/RefineGame.h"
 #include <typeinfo>
 
 #include <iostream>

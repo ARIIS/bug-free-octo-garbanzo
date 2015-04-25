@@ -6,7 +6,7 @@
  */
 
 #include "RefineGame.h"
-#include "ModelChecking.h"
+#include "../modelChecking/ModelChecking.h"
 
 RefineGame::RefineGame(Arena *arena, int numEstadosModelo) {
     this->modificationsList = *(new list<SetOperations>);

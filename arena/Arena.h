@@ -1,12 +1,12 @@
 #ifndef ARENA_H
 #define ARENA_H
 
-#include "../Formula.h"
-#include "../FormulaBinaria.h"
-#include "../FormulaLiteral.h"
-#include "../FormulaVariavel.h"
-#include "../FormulaPrefixa.h"
-#include "../FormulaPontoFixo.h"
+#include "Formula.h"
+#include "FormulaBinaria.h"
+#include "FormulaLiteral.h"
+#include "FormulaVariavel.h"
+#include "FormulaPrefixa.h"
+#include "FormulaPontoFixo.h"
 // #include "Estado.h"
 #include "Configuracao.h"
 #include "Componente.h"

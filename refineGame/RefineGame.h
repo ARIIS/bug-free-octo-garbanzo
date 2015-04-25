@@ -8,9 +8,9 @@
 #ifndef REFINEGAME_H
 #define	REFINEGAME_H
 
-#include "arena/Arena.h"
-#include "arena/Configuracao.h"
-#include "Formula.h"
+#include "../arena/Arena.h"
+#include "../arena/Configuracao.h"
+#include "../arena/Formula.h"
 // #include "FormulaBinaria.h"
 // #include "FormulaPrefixa.h"
 

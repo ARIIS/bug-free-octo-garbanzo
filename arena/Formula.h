@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 
-#include "arena/Estado.h"
+#include "Estado.h"
 
 using namespace std;
 

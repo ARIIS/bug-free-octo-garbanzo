@@ -11,7 +11,7 @@
 #include <string>
 #include <iostream>
 
-#include "../Formula.h"
+#include "../arena/Formula.h"
 // #include "Configuracao.h"
 
 using namespace std;
