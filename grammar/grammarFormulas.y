@@ -4,7 +4,7 @@
    	#include <stdlib.h>
 	#include "Formula.h"
 	#include <string>
-    #include "Estado.h"
+    #include "arena/Estado.h"
     #include <set>
 
 	using namespace std;

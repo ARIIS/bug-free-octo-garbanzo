@@ -18,7 +18,7 @@
 #include "FormulaPrefixa.h"
 #include "FormulaPontoFixo.h"
 
-#include "Estado.h"
+#include "arena/Estado.h"
 
 using namespace std;
 

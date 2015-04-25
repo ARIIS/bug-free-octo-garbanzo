@@ -33,9 +33,9 @@ CC=g++
 CFLAGS= -c
 LDFLAGS= -g -o
 # SOURCES=home/main.cpp modelChecking/Configuracao.cpp modelChecking/Estado.cpp modelChecking/Formula.cpp modelChecking/ModelChecking.cpp read/Leitor.cpp refine/RefineGame.cpp lib/VisitTree.cpp
+TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
 FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
 ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
-TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
 SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) Leitor.cpp RefineGame.cpp
 GRAMMAR=
 OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
@@ -56,6 +56,7 @@ bin/%.o: %.cpp
 # if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
 #
 
+# lib folder
 bin/VisitTree.o: lib/VisitTree.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
@@ -65,6 +66,23 @@ bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
 bin/Path.o: lib/Path.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
+
+# FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
+# ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
+
+# arena folder
+
+bin/Arena.o: arena/Arena.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+bin/Estado.o: arena/Estado.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+bin/Configuracao.o: arena/Configuracao.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+bin/Componente.o: arena/Componente.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 # bin/main.o: main.cpp
 # 	$(CC) $(CFLAGS) $< -o $@

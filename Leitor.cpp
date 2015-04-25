@@ -2,10 +2,9 @@
 #include <cstdlib>
 #include <iostream>
 // #include "lex.yy.c"
-#include "Formula.h"
+// #include "Formula.h"
 #include "lib/VisitTree.h"
 #include "scanner.c"
-#include "Estado.h"
 #include <map>
 
 using namespace std;

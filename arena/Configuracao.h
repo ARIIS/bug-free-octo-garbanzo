@@ -1,7 +1,7 @@
 #ifndef CONFIGURACAO_H
 #define	CONFIGURACAO_H
 
-#include "Formula.h"
+#include "../Formula.h"
 #include "Estado.h"
 #include <vector>
 #include <map>

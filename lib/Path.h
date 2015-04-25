@@ -2,7 +2,7 @@
 #define PATH_H
 
 #include "VisitTree.h"
-#include "../Configuracao.h"
+#include "../arena/Configuracao.h"
 
 // #include <string>
 // #include <list>

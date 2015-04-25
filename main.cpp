@@ -12,7 +12,7 @@
 //#include "scanner.c"
 #include "Leitor.h"
 //#include "parser.h"
-#include "Configuracao.h"
+#include "arena/Configuracao.h"
 #include "ModelChecking.h"
 #include "RefineGame.h"
 #include <typeinfo>

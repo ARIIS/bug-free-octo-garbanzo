@@ -1,10 +1,18 @@
 #!/bin/bash
-txt="bison grammarFormulas.y "
-txt1="flex lexicoFormulas.lex"
-txt2="g++ -g -o parser *.cpp"
-$txt
-$txt1
-$txt2
 
+#txt="bison grammarFormulas.y "
+#txt1="flex lexicoFormulas.lex"
+#txt2="g++ -g -o parser *.cpp"
+#$txt
+#$txt1
+#$txt2
 
+echo "Teste 1"
+test1="./refiner novaentrada"
+$test1
 
+echo ""
+
+echo "Teste 2"
+test2="./refiner novaentrada2"
+$test2

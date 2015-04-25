@@ -1,9 +1,9 @@
 #include "Componente.h"
-#include "Configuracao.h"
-#include "lib/VisitTree.h"
+// #include "Configuracao.h"
+#include "../lib/VisitTree.h"
 #include <typeinfo>
 #include <vector>
-#include "Estado.h"
+// #include "Estado.h"
 #include <sstream>
 #include <iostream>
 #include <stdlib.h>

@@ -1,11 +1,11 @@
 #include "Arena.h"
 
-#include "Configuracao.h"
-#include "lib/VisitTree.h"
-#include "lib/VisitConfiguracao.h"
+// #include "Configuracao.h"
+#include "../lib/VisitTree.h"
+#include "../lib/VisitConfiguracao.h"
 #include <typeinfo>
 #include <vector>
-#include "Estado.h"
+// #include "Estado.h"
 #include <sstream>
 #include <iostream>
 #include <stdlib.h>
