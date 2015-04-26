@@ -32,7 +32,6 @@ CC=g++
 # CFLAGS= -c -Wall
 CFLAGS= -c
 LDFLAGS= -g -o
-# SOURCES=home/main.cpp modelChecking/Configuracao.cpp modelChecking/Estado.cpp modelChecking/Formula.cpp modelChecking/ModelChecking.cpp read/Leitor.cpp refine/RefineGame.cpp lib/VisitTree.cpp
 TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
 FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
 ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
@@ -56,7 +55,7 @@ $(EXECUTABLE): $(OBJECTS)
 # if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
 #
 
-bin/main.o: main.cpp
+bin/main.o: home/main.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 # lib folder
@@ -118,31 +117,22 @@ bin/ModelChecking.o: modelChecking/ModelChecking.cpp
 bin/RefineGame.o: refineGame/RefineGame.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-# every command above belongs to the tree of "all" command.
-# from here, the commands below are independents.
+
+# other dependencies
 
 bin/:
 	mkdir bin
 
-# grammarlexic: read/grammarFormulas.tab.c read/scanner.c
+grammarlexic: read/grammarFormulas.tab.c read/scanner.c
 
-# read/grammarFormulas.tab.c: parserFiles/grammarFormulas.y
-# 	bison $<
-# 	mv parserFiles/*.tab.c read
+read/grammarFormulas.tab.c: grammar/grammarFormulas.y
+	bison $< -o $@
 
-# read/scanner.c: parserFiles/lexicoFormulas.lex
-# 	flex $<
-# 	mv scanner.* read
-
-grammarlexic: grammar/grammarFormulas.tab.c grammar/scanner.c
-
-grammar/grammarFormulas.tab.c: grammar/grammarFormulas.y
-	bison $<
-	mv $@ read/
-
-grammar/scanner.c: grammar/lexicoFormulas.lex
+read/scanner.c: grammar/lexicoFormulas.lex
 	flex $<
-	mv scanner.* read/
+
+# every command above belongs to the tree of "all" command.
+# from here, the commands below are independents.
 
 clean: cleanBin cleanGrammar
 

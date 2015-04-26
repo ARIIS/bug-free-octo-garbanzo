@@ -1,5 +1,5 @@
 %option noyywrap
-%option   outfile="scanner.c" header-file="scanner.h"
+%option   outfile="read/scanner.c" header-file="read/scanner.h"
 
 %top{
 	#include <iostream>
