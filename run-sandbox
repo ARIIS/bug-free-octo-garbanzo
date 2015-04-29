@@ -1,18 +1,11 @@
 #!/bin/bash
 
-#txt="bison grammarFormulas.y "
-#txt1="flex lexicoFormulas.lex"
-#txt2="g++ -g -o parser *.cpp"
-#$txt
-#$txt1
-#$txt2
-
 echo "Teste 1"
-test1="./refiner sandbox/novaentrada > out1"
-$test1
+./refiner sandbox/novaentrada > sandbox/out-result1
+diff sandbox/out-result1 sandbox/out-default1
 
 echo ""
 
 echo "Teste 2"
-test2="./refiner sandbox/novaentrada2 > out2"
-$test2
+./refiner sandbox/novaentrada2 > sandbox/out-result2
+diff sandbox/out-result2 sandbox/out-default2

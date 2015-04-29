@@ -134,13 +134,16 @@ read/scanner.c: grammar/lexicoFormulas.lex
 # every command above belongs to the tree of "all" command.
 # from here, the commands below are independents.
 
-clean: cleanBin cleanGrammar
+clean: cleanBin cleanGrammar cleanTestResult
 
 cleanBin:
 	rm -rf bin/*.o $(EXECUTABLE)
 
 cleanGrammar:
 	rm -rf read/scanner.* read/*.tab.c
+
+cleanTestResult:
+	rm -rf sandbox/out-result*
 
 # help
 
