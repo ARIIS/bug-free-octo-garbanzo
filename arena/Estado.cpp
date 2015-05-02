@@ -1,6 +1,6 @@
 #include <list>
 
-#include "../modelChecking/Estado.h"
+#include "Estado.h"
 
 Estado::Estado(string nome, list<literalNegativo> literais) {
     this->nome = nome;
@@ -34,20 +34,20 @@ void Estado::addTransicao(Transicao &t) {
 }
 
 void Estado::removeTransicao(Transicao t){
-    for(list<Transicao>::iterator it = this->transicoes.begin() ;
+    for(list<Transicao>::iterator it = this->transicoes.begin() ; 
             it != this->transicoes.end() ; it++){
         if (it->filho->getNome() == t.filho->getNome() && it->tipo == t.tipo){
             this->transicoes.erase(it);
             break;
-        }
+        } 
     }
 }
 
 LogicalValues Estado::valueOfLiteral(literalNegativo ln) {
-
+    
     set<literalNegativo>::iterator it = this->literais.find(ln);
-
-    if (it == this->literais.end()) {
+    
+    if (it == this->literais.end()) {        
         return L_INDEFINED;
     } else {
         return ( (it->valorLogico) ? L_TRUE : L_FALSE);

@@ -1,5 +1,6 @@
-#include "../modelChecking/ModelChecking.h"
-#include "../modelChecking/Configuracao.h"
+#include "ModelChecking.h"
+// #include "arena/Arena.h"
+// #include "arena/Configuracao.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>

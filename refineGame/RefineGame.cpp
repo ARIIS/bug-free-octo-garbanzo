@@ -5,7 +5,7 @@
  * Created on December 10, 2013, 4:58 PM
  */
 
-#include "../refine/RefineGame.h"
+#include "RefineGame.h"
 #include "../modelChecking/ModelChecking.h"
 
 RefineGame::RefineGame(Arena *arena, int numEstadosModelo) {

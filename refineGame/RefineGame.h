@@ -8,8 +8,11 @@
 #ifndef REFINEGAME_H
 #define	REFINEGAME_H
 
-#include "../modelChecking/Configuracao.h"
-#include "../modelChecking/Formula.h"
+#include "../arena/Arena.h"
+#include "../arena/Configuracao.h"
+#include "../arena/Formula.h"
+// #include "FormulaBinaria.h"
+// #include "FormulaPrefixa.h"
 
 typedef struct {
     Configuracao *origem;

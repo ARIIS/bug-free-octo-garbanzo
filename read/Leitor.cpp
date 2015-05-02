@@ -1,11 +1,10 @@
-#include "../read/Leitor.h"
+#include "Leitor.h"
 #include <cstdlib>
 #include <iostream>
 // #include "lex.yy.c"
-#include "../modelChecking/Formula.h"
+// #include "Formula.h"
 #include "../lib/VisitTree.h"
-#include "../read/scanner.c"
-#include "../modelChecking/Estado.h"
+#include "scanner.c"
 #include <map>
 
 using namespace std;

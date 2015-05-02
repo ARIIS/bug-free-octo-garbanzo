@@ -2,10 +2,10 @@
    	#include <iostream>
    	#include <stdio.h>
    	#include <stdlib.h>
-	#include "../modelChecking/Formula.h"
+	#include "../arena/Formula.h"
 	#include <string>
-        #include "../modelChecking/Estado.h"
-        #include <set>
+    #include "../arena/Estado.h"
+    #include <set>
 
 	using namespace std;
 

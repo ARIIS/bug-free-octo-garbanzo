@@ -1,7 +1,9 @@
 #ifndef MODEL_CHECKING
 #define	MODEL_CHECKING
 
-#include "../modelChecking/Configuracao.h"
+#include "../arena/Configuracao.h"
+#include "../arena/Componente.h"
+#include "../arena/Arena.h"
 #include <vector>
 #include <stack>
 

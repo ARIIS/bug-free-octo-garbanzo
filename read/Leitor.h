@@ -11,8 +11,14 @@
 #include <string>
 #include <iostream>
 
-#include "../modelChecking/Formula.h"
-#include "../modelChecking/Estado.h"
+#include "../arena/Formula.h"
+#include "../arena/FormulaBinaria.h"
+#include "../arena/FormulaLiteral.h"
+#include "../arena/FormulaVariavel.h"
+#include "../arena/FormulaPrefixa.h"
+#include "../arena/FormulaPontoFixo.h"
+
+#include "../arena/Estado.h"
 
 using namespace std;
 

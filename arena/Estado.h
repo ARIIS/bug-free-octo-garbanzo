@@ -11,7 +11,7 @@
 #include <string>
 #include <iostream>
 #include <set>
-#include "../modelChecking/Estado.h"
+// #include "Estado.h"
 #include <list>
 
 using namespace std;
@@ -33,8 +33,6 @@ typedef struct{
     string est1, est2;
     TipoTransicao tipo;
 }TransicaoTemp;
-
-
 
 
 class Estado{
