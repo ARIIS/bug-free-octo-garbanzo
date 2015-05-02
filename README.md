@@ -28,6 +28,7 @@ Para manter seu fork sincronizado:
 * `git fetch upstream`
 * `git checkout master`
 * `git merge upstream/master`
+* `git push origin master`
 * [leia mais](https://help.github.com/articles/syncing-a-fork/)
 
 ###Dependêcias
