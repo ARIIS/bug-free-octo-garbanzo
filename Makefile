@@ -59,47 +59,47 @@ bin/main.o: home/main.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 # lib folder
-bin/VisitTree.o: lib/VisitTree.cpp
+bin/%.o: lib/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/Path.o: lib/Path.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/Path.o: lib/Path.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
 # arena folder
 
-bin/Arena.o: arena/Arena.cpp
+bin/%.o: arena/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-bin/Estado.o: arena/Estado.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/Estado.o: arena/Estado.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/Configuracao.o: arena/Configuracao.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/Configuracao.o: arena/Configuracao.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/Componente.o: arena/Componente.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/Componente.o: arena/Componente.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
 
-bin/Formula.o: arena/Formula.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/Formula.o: arena/Formula.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/FormulaBinaria.o: arena/FormulaBinaria.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/FormulaBinaria.o: arena/FormulaBinaria.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/FormulaLiteral.o: arena/FormulaLiteral.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/FormulaLiteral.o: arena/FormulaLiteral.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/FormulaVariavel.o: arena/FormulaVariavel.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/FormulaVariavel.o: arena/FormulaVariavel.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/FormulaPrefixa.o: arena/FormulaPrefixa.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/FormulaPrefixa.o: arena/FormulaPrefixa.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
-bin/FormulaPontoFixo.o: arena/FormulaPontoFixo.cpp
-	$(CC) $(CFLAGS) $< -o $@
+# bin/FormulaPontoFixo.o: arena/FormulaPontoFixo.cpp
+# 	$(CC) $(CFLAGS) $< -o $@
 
 
 # read folder

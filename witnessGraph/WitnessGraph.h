@@ -4,13 +4,13 @@
 #include <list>
 #include <vector>
 #include "Vertex.h"
-#include "../refine/RefineGame.h"
+#include "../refineGame/RefineGame.h"
 #include "Change.h"
 
 class WitnessGraph{
-    
+
     typedef list<WitnessGraph*> conjuntodegrafos;
-	
+
 	private:
 		vector<Vertex*> nTV;
 		set<Configuracao*> visitados;
@@ -23,7 +23,7 @@ class WitnessGraph{
                 vector<conjuntodegrafos> vG;
                 static int graphcount;
                 int graphid;
-	
+
 	public:
 		WitnessGraph();
 		WitnessGraph(Arena* a, list<TestemunhadeFalha> w);
@@ -39,7 +39,7 @@ class WitnessGraph{
                 conjuntodegrafos beta(Vertex* v);
                 conjuntodegrafos organizealfa(Vertex* v);
                 conjuntodegrafos organizebeta(Vertex* v);
-		 
+
 };
 
 

@@ -15,7 +15,7 @@ Vertex::Vertex(Vertex* v){
 }
 
 Vertex::Vertex(Configuracao* head){
-	
+
 	this->head = head;
         if (head->getJogador() == PARATODO){
             this->kind = ABELARDO;
@@ -24,7 +24,6 @@ Vertex::Vertex(Configuracao* head){
         }
 	this->children = *(new list<Vertex*>);
 	this->parents = *(new list<Vertex*>);
-	
 }
 
 set<int> Vertex::getChildset(){
@@ -103,28 +102,3 @@ Vertex* Vertex::getParent(){
     Vertex* v = parents.front();
     return v;
 }
-
-VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, TipoTransicao transition){
-	this->setHead(head);
-        if (head->getJogador() == PARATODO){
-            this->setKind(ABELARDO);
-        } else {
-            this->setKind(EVA);
-        }
-	this->tail = tail;
-	this->transition = transition;
-	
-}
-
-Change* VertexWitness::getChange(){
-    return this->mudanca;
-}
-
-void VertexWitness::insertChange(Change* c){
-    this->mudanca = c;
-}
-
-/* int main(int argc , char **argv){
-	
-	return 0;
-} */

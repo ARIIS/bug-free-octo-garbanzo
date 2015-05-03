@@ -1,8 +1,8 @@
 #ifndef VERTEX_H
 #define	VERTEX_H
 
-#include "../modelChecking/Configuracao.h"
-#include "../modelChecking/Estado.h"
+#include "../arena/Configuracao.h"
+#include "../arena/Estado.h"
 #include <list>
 #include <set>
 
@@ -12,17 +12,18 @@ typedef enum {
 
 class Vertex{
 
-private: 
+private:
 	VertexKind kind;
 	Configuracao *head;
 	list<Vertex*> children;
 	list<Vertex*> parents;
         int idnum;
         set<int> childset;
-	
+
 public:
-	
+
 	Vertex();
+    Vertex::Vertex(Vertex* v);
 	Vertex(Configuracao* head);
 	Configuracao* getHead();
 	VertexKind getKind();
@@ -41,22 +42,6 @@ public:
         Vertex* getParent();
         virtual Configuracao* getTail()
 
-};
-
-class VertexWitness: public Vertex {
-	
-	private:
-		Configuracao *tail;
-		TipoTransicao transition;
-                Change* mudanca;
-	
-	public:
-		VertexWitness(Configuracao* head, Configuracao* tail, TipoTransicao transition);
-		Configuracao* getTail();
-		TipoTransicao getTransition();
-                bool isWitness();
-                Change* getChange();
-                void insertChange(Change* c);
 };
 
 #endif
