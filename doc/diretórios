@@ -1,41 +1,70 @@
 diretórios:
 
 -README.md
--LICENSE		[toBeCreated]
--makefile
-+bin
-	-*.o
-+doc
-	-*.txt		[example]
-	-*.pdf		[example]
-	-*.tex		[example]
-	-*.latex	[example]
-+modelChecking
-	-ModelChecking.h
-	-ModelChecking.cpp
-	-Formula.h
-	-Formula.cpp
-	-Estado.h
-	-Estado.cpp
-	-Configuracao.h
-	-Configuracao.cpp
-+read
-	-grammarFormulas.tab.c
-	-scanner.h
-	-scanner.c
-	-Leitor.h
-	-Leitor.cpp
-+lib
-	-VisitTree.h
-	-VisitTree.cpp
-+refine
-	-RefineGame.h
-	-RefineGame.cpp
-+parserFiles
-	-grammarFormulas.y
-	-lexicoFormulas.lex
+-LICENSE
+-Makefile
+-run-sandbox
+
 +home
-	-main.cpp
-	-refiner		[toBeCreated]
-	-model.jd		[toBeCreated]
-	-property.jd	[toBeCreated]
+    -main.cpp
+    -refiner        [toBeCreated]
+    -model.jd       [toBeCreated]
+    -property.jd    [toBeCreated]
+
++grammar
+    -grammarFormulas.y
+    -lexicoFormulas.lex
+
++read
+    -Leitor.h
+    -Leitor.cpp
+    -[allFlagsOf /grammar folder]
+
++arena
+    -Formula.h
+    -Formula.cpp
+    -FormulaBinaria.h
+    -FormulaBinaria.cpp
+    -FormulaPrefixa.h
+    -FormulaPrefixa.cpp
+    -FormulaLiteral.h
+    -FormulaLiteral.cpp
+    -FormulaVariavel.h
+    -FormulaVariavel.cpp
+    -FormulaPontoFixo.h
+    -FormulaPontoFixo.cpp
+    -Arena.h
+    -Arena.cpp
+    -Estado.h
+    -Estado.cpp
+    -Configuracao.h
+    -Configuracao.cpp
+    -Componente.h
+    -Componente.cpp
+
++modelChecking
+    -ModelChecking.h
+    -ModelChecking.cpp
+
++refineGame
+    -RefineGame.h
+    -RefineGame.cpp
+
++lib
+    -VisitTree.h
+    -VisitTree.cpp
+    -VisitConfiguracao.h
+    -VisitConfiguracao.cpp
+    -Path.h
+    -Path.cpp
+
++bin
+    -*.o
+
++sandbox
+    [ins, outs defaults and result tests]
+
++doc
+    -*.txt      [example]
+    -*.pdf      [example]
+    -*.tex      [example]
