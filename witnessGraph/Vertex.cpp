@@ -71,7 +71,7 @@ virtual bool Vertex::isWitness(){
 }
 
 list<Vertex*> Vertex::getChildren(){
-	return this->children;
+    return this->children;
 }
 
 list<Vertex*> Vertex::getParents(){

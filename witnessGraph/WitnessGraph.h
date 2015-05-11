@@ -9,18 +9,18 @@
 
 class WitnessGraph{
 
-    typedef list<WitnessGraph*> conjuntodegrafos;
+    typedef list<WitnessGraph*> graphlist;
 
 	private:
 		vector<Vertex*> nTV;
-		set<Configuracao*> visitados;
+		set<Configuracao*> visited;
                 list<TestemunhadeFalha> witnesses;
 		bool pertence(Configuracao* ci, Configuracao* cj);
 		list<Vertex*> vertices;
                 vector<Vertex*> verticesvector;
                 void insertVertex(Vertex* v);
                 Vertex* root;
-                vector<conjuntodegrafos> vG;
+                vector<graphlist> vG;
                 static int graphcount;
                 int graphid;
 
@@ -34,11 +34,11 @@ class WitnessGraph{
                 void connect(WitnessGraph* sub);
                 list<Vertex*> getVertices();
                 int rootId();
-                conjuntodegrafos evaMinimals(Vertex* v);
-                conjuntodegrafos alfa(Vertex* v);
-                conjuntodegrafos beta(Vertex* v);
-                conjuntodegrafos organizealfa(Vertex* v);
-                conjuntodegrafos organizebeta(Vertex* v);
+                graphlist evaMinimals(Vertex* v);
+                graphlist alfa(Vertex* v);
+                graphlist beta(Vertex* v);
+                graphlist arrangealfa(Vertex* v);
+                graphlist arrangebeta(Vertex* v);
 
 };
 

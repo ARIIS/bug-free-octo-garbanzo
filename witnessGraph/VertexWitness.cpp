@@ -13,9 +13,9 @@ VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, TipoTransic
 }
 
 Change* VertexWitness::getChange(){
-    return this->mudanca;
+    return this->mychange;
 }
 
 void VertexWitness::insertChange(Change* c){
-    this->mudanca = c;
+    this->mychange = c;
 }

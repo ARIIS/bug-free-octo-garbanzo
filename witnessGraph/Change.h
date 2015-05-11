@@ -4,7 +4,7 @@
 #include "Estado.h"
 #include <unordered_set>
 
-struct identificadores{
+struct identificators{
     int state1;
     int state2;
     literalNegativo lit;
@@ -22,7 +22,7 @@ class Change{
         
     public:
         void include(int subid);
-        bool isContido(int subid);
+        bool isMember(int subid);
         changeid getChangeId();
 };
 

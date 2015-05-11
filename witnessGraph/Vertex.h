@@ -23,7 +23,7 @@ private:
 public:
 
 	Vertex();
-    Vertex::Vertex(Vertex* v);
+        Vertex::Vertex(Vertex* v);
 	Vertex(Configuracao* head);
 	Configuracao* getHead();
 	VertexKind getKind();

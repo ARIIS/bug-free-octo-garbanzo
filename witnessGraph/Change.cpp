@@ -12,7 +12,7 @@ void Change::include(int subid){
     this->graphs.insert(subid);
 }
 
-bool Change::isContido(int subid){
+bool Change::isMember(int subid){ //11
     if (this->graphs.find(subid) == this->graphs.end()){
         return false;
     } else {

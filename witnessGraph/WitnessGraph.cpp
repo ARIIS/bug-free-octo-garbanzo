@@ -5,8 +5,9 @@ WitnessGraph::WitnessGraph(){
 }
 
 WitnessGraph::WitnessGraph(Arena* a, list<TestemunhadeFalha> w){
+        this->graphcount = 0;
         this->witnesses = w;
-	this->visitados = *(new set<Configuracao*>);
+	this->visited = *(new set<Configuracao*>);
 	this->vertices = *(new list<Vertex*>);
 	int n = a->getMatrizConfiguracao().size();
 	this->nTV = *(new vector<Vertex*>(n));
@@ -24,15 +25,16 @@ WitnessGraph::WitnessGraph(Arena* a, list<TestemunhadeFalha> w){
         for(list<Vertex*>::iterator it = vertices.begin(); it != vertices.end();it++){
             verticesvector[(*it)->getId()] = (*it);
         }
-        this->vG = *(vector<conjuntodegrafos>[vertices.size()]);
+        this->vG = *(new vector<graphlist>[vertices.size()]);
 }
 
 WitnessGraph::WitnessGraph(Vertex* v){
+    this->changes = *(new list<Change*>);
     this->vertices = *(new list<Vertex*>);
-    Vertex* vlinha;
-    vlinha = new Vertex(v);
-    root = vlinha;
-    this->vertices.push_back(vlinha);
+    Vertex* vline;
+    vline = new Vertex(v);
+    root = vline;
+    this->vertices.push_back(vline);
     this->graphid = graphcount++;
     if (v->isWitness()){
         Change *x = v->getChange();
@@ -54,8 +56,8 @@ void WitnessGraph::createEdge(Vertex* origin, Vertex* destination){
 Vertex* WitnessGraph::cycleAncestor(Configuracao* ci){
 	if (nTV[ci->getNumNome()]==0){
 		Configuracao* cj;
-		list<Configuracao::TransicaoConfig> filhos = ci->getFilhos();
-		for (list<Configuracao::TransicaoConfig>::iterator it = filhos.begin(); it != filhos.end(); it++){
+		list<Configuracao::TransicaoConfig> kids = ci->getFilhos();
+		for (list<Configuracao::TransicaoConfig>::iterator it = kids.begin(); it != kids.end(); it++){
 			if ((*it).destino->getCor() == C_INDEF){
 				cj = (*it).destino;
                                 break;
@@ -66,7 +68,7 @@ Vertex* WitnessGraph::cycleAncestor(Configuracao* ci){
 	return nTV[ci->getNumNome()];
 }
 
-bool WitnessGraph::pertence(Configuracao* ci, Configuracao* cj){
+bool WitnessGraph::match(Configuracao* ci, Configuracao* cj){
 	bool out = false;
 	for (list<TestemunhadeFalha>::iterator it = witnesses.begin(); it != witnesses.end(); it++){
 		if ((*it).origem == ci && ((*it).destino)-> == cj){
@@ -77,26 +79,26 @@ bool WitnessGraph::pertence(Configuracao* ci, Configuracao* cj){
 }
 
 Vertex* WitnessGraph::nextVertex(Configuracao* ci){
-	this->visitados.insert(ci);
+	this->visited.insert(ci);
 	list<Configuracao::TransicaoConfig> t = *(new list<Configuracao::TransicaoConfig>);
-	list<Configuracao::TransicaoConfig> filhos = ci->getFilhos();
-	for (list<Configuracao::TransicaoConfig>::iterator it = filhos.begin(); it != filhos.end(); it++){
-			if ((*it).destino->getCor() == C_INDEF || pertence(ci,(*it).destino)){
+	list<Configuracao::TransicaoConfig> kids = ci->getFilhos();
+	for (list<Configuracao::TransicaoConfig>::iterator it = kids.begin(); it != kids.end(); it++){
+			if ((*it).destino->getCor() == C_INDEF || match(ci,(*it).destino)){
 				t.push_back((*it));
 			}
 	}
-	TipoTransicao tipo;
+	TipoTransicao type;
 	Vertex* v;
-	if (t.size() == 1 && pertence(ci,t.front().destino)){
+	if (t.size() == 1 && match(ci,t.front().destino)){
 
 		Configuracao::TransicaoConfig trans = t.front();
 
 		if (trans.isMust){
-			tipo = MUST;
+			type = MUST;
 		} else {
-			tipo = MAY;
+			type = MAY;
 		}
-		v = new VertexWitness(ci,trans.destino,tipo);
+		v = new VertexWitness(ci,trans.destino,type);
 		nTV[ci->getNumNome()] = v;
 		this->insertVertex(v);
 	} else if (t.size() > 2){
@@ -105,39 +107,39 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
 		this->insertVertex(v);
 	}
 	Configuracao* cj;
-	Vertex* novov;
+	Vertex* newv;
 	for (list<Configuracao::TransicaoConfig>::iterator it = t.begin(); it != t.end(); it++){
 		cj = (*it).destino;
 		if ((*it).isMust){
-			tipo = MUST;
+			type = MUST;
 		} else {
-			tipo = MAY;
+			type = MAY;
 		}
 		if (t.size() > 1 && cj->getCor() != C_INDEF || cj->getConectivo() == C_NONE){
-			novov = new VertexWitness(ci,cj,tipo);
-			createEdge(nTV[ci->getNumNome()],novov);
-			this->insertVertex(novov);
+			newv = new VertexWitness(ci,cj,type);
+			createEdge(nTV[ci->getNumNome()],newv);
+			this->insertVertex(newv);
 		} else {
 			if (cj->getCor() == C_INDEF && cj->getConectivo() != C_NONE){
-				novov = nTV[ci->getNumNome()];
-				if (visitados.find(cj) != visitados.end()){
-					novov = cycleAncestor(cj);
+				newv = nTV[ci->getNumNome()];
+				if (visited.find(cj) != visited.end()){
+					newv = cycleAncestor(cj);
 				} else {
-					novov = nextVertex(cj,w);
+					newv = nextVertex(cj,w);
 				}
-				if (pertence(ci,cj) && t.size()==1){
-					createEdge(nTV[ci->getNumNome()],novov);
+				if (match(ci,cj) && t.size()==1){
+					createEdge(nTV[ci->getNumNome()],newv);
 				} else {
-					if (pertence(ci,cj)){
-						Vertex* v1 = new VertexWitness(ci,cj, tipo);
+					if (match(ci,cj)){
+						Vertex* v1 = new VertexWitness(ci,cj, type);
                                                 insertVertex(v1);
 						createEdge(nTV[ci->getNumNome()],v1);
-						createEdge(v1,novov);
+						createEdge(v1,newv);
 					} else {
 						if (t.size()>1){
-							createEdge(nTV[ci->getNumNome()],novov);
+							createEdge(nTV[ci->getNumNome()],newv);
 						} else {
-							nTV[ci->getNumNome()] = novov;
+							nTV[ci->getNumNome()] = newv;
 						}
 					}
 				}
@@ -148,11 +150,11 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
 	return nTV[ci->getNumNome()];
 }
 
-list<Vertex*> WitnessGraph::getVertices(){
+list<Vertex*> WitnessGraph::getVertices(){ //15
     return vertices;
 }
 
-int WitnessGraph::rootId(){
+int WitnessGraph::rootId(){ //13
     return this->root->getId();
 }
 
@@ -165,25 +167,26 @@ void WitnessGraph::connect(WitnessGraph* sub){
     this->root.insertChildset(sub->rootId());
 }
 
-conjuntodegrafos WitnessGraph::evaMinimals(Vertex* v){
-    if (vG[v->getId()] == 0){
+graphlist WitnessGraph::evaMinimals(Vertex* v){
+    int id = v->getId();
+    if (vG[id] == 0){
         if(v->getKind == EVA){
-            vG[v->getId()] = alfa(v);
+            vG[id] = alfa(v);
         } else {
-            vG[v->getId()] = beta(v);
+            vG[id] = beta(v);
         }
     }
-    return vG[v->getId()];
+    return vG[id];
 }
 
-conjuntodegrafos WitnessGraph::alfa(Vertex* v){
-    conjuntodegrafos out = *(new conjuntodegrafos);
+graphlist WitnessGraph::alfa(Vertex* v){ //2
+    graphlist out = *(new graphlist);
     if (v->isWitness() && v->getTail()->getConectivo() == C_INDEF){
         out.push_back(new WitnessGraph(v));
     } else {
-        list<conjuntodegrafos> children = *(new list<conjuntodegrafos>);
-        for (list<Vertex*>::iterator filho = v->getChildren().begin(); filho != v->getChildren().end(); filho++){
-            children.push_back(evaMinimals(*filho));
+        list<graphlist> children = *(new list<graphlist>);
+        for (list<Vertex*>::iterator kid = v->getChildren().begin(); kid != v->getChildren().end(); kid++){
+            children.push_back(evaMinimals(*kid));
         }
         out = organizealfa(v,children);
     }
@@ -191,16 +194,16 @@ conjuntodegrafos WitnessGraph::alfa(Vertex* v){
     return out;
 }
 /*
-conjuntodegrafos WitnessGraph::beta(Vertex* v){
-    conjuntodegrafos out = *(new conjuntodegrafos);
+graphlist WitnessGraph::beta(Vertex* v){
+    graphlist out = *(new graphlist);
     if (v->isWitness() && v->getTail()->getConectivo() == C_INDEF){
         if (v->getHead() != v->getParent()->getHead()){
             out.push_back(new WitnessGraph(v));
         }
     } else {
-        list<conjuntodegrafos> children = *(new list<conjuntodegrafos>);
-        for (list<Vertex*>::iterator filho = v->getChildren().begin(); filho != v->getChildren().end(); filho++){
-            children.push_back(evaMinimals(*filho));
+        list<graphlist> children = *(new list<graphlist>);
+        for (list<Vertex*>::iterator kid = v->getChildren().begin(); kid != v->getChildren().end(); kid++){
+            children.push_back(evaMinimals(*kid));
         }
         out = organizebeta(v,children);
     }
@@ -208,12 +211,12 @@ conjuntodegrafos WitnessGraph::beta(Vertex* v){
     return out;
 }*/
 
-conjuntodegrafos WitnessGraph::organizealfa(Vertex* v, list<conjuntodegrafos> conjuntos){
-    conjuntodegrafos min = *(new conjuntodegrafos);
+graphlist WitnessGraph::organizealfa(Vertex* v, list<graphlist> conjuntos){ //9
+    graphlist min = *(new graphlist);
     min = conjuntos.pop_front();
-    for (list<conjuntodegrafos>::iterator it = conjuntos.begin(); it!=conjuntos.end();it++){
-        for(conjuntodegrafos::iterator candidato = (*it).begin(); candidato!=(*it).end();candidato++){
-            conjuntodegrafos::iterator mini;
+    for (list<graphlist>::iterator it = conjuntos.begin(); it!=conjuntos.end();it++){
+        for(graphlist::iterator candidato = (*it).begin(); candidato!=(*it).end();candidato++){
+            graphlist::iterator mini;
             for(mini = min.begin(); mini!=min.end();mini++){
                 comparacao relacao = compara((*candidato),(*mini));
                 if (relacao == MAIOR){
@@ -231,8 +234,8 @@ conjuntodegrafos WitnessGraph::organizealfa(Vertex* v, list<conjuntodegrafos> co
         }
     }
     WitnessGraph* father;
-    conjuntodegrafos out;
-    for (conjuntodegrafos::iterator it = min.begin(); it != min.end(); it++){
+    graphlist out;
+    for (graphlist::iterator it = min.begin(); it != min.end(); it++){
         father = new WitnessGraph(v);
         father->connect(*it);
         out.push_back(father);
