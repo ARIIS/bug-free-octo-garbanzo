@@ -4,3 +4,4 @@ read/scanner.h
 read/scanner.c
 bin/*.o
 .project
+sandbox/out-result*
