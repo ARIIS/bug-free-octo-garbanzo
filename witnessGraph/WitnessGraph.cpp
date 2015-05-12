@@ -25,7 +25,7 @@ WitnessGraph::WitnessGraph(Arena* a, list<TestemunhadeFalha> w){
         for(list<Vertex*>::iterator it = vertices.begin(); it != vertices.end();it++){
             verticesvector[(*it)->getId()] = (*it);
         }
-        this->vG = *(new vector<graphlist>[vertices.size()]);
+        this->vG = *(new vector<revisionlist>[vertices.size()]);
 }
 
 WitnessGraph::WitnessGraph(Vertex* v){
@@ -167,7 +167,11 @@ void WitnessGraph::connect(WitnessGraph* sub){
     this->root.insertChildset(sub->rootId());
 }
 
-graphlist WitnessGraph::evaMinimals(Vertex* v){
+revisionlist WitnessGraph::evaMinimals(Vertex* v){
+    return minimals(evaGraphs(v));
+}
+
+revisionlist WitnessGraph::evaGraphs(Vertex* v){
     int id = v->getId();
     if (vG[id] == 0){
         if(v->getKind == EVA){
@@ -179,68 +183,80 @@ graphlist WitnessGraph::evaMinimals(Vertex* v){
     return vG[id];
 }
 
-graphlist WitnessGraph::alfa(Vertex* v){ //2
-    graphlist out = *(new graphlist);
+revisionlist WitnessGraph::alfa(Vertex* v){
+    revisionlist out = *(new revisionlist);
     if (v->isWitness() && v->getTail()->getConectivo() == C_INDEF){
-        out.push_back(new WitnessGraph(v));
+        out.push_back(Change::getRevision(v));
     } else {
-        list<graphlist> children = *(new list<graphlist>);
         for (list<Vertex*>::iterator kid = v->getChildren().begin(); kid != v->getChildren().end(); kid++){
-            children.push_back(evaMinimals(*kid));
+            revisionlist thiskid = evaGraphs(*kid);
+            for (revisionlist::iterator it = thiskid.begin(); it != thiskid.end(); it++){
+                revision aux = Change::getRevision(v);
+                aux.splice(aux.begin(),(*it));
+                out.push_back(aux);
+            }
         }
-        out = organizealfa(v,children);
     }
 
     return out;
 }
-/*
-graphlist WitnessGraph::beta(Vertex* v){
-    graphlist out = *(new graphlist);
-    if (v->isWitness() && v->getTail()->getConectivo() == C_INDEF){
-        if (v->getHead() != v->getParent()->getHead()){
-            out.push_back(new WitnessGraph(v));
+
+comparation WitnessGraph::compare(revision rev1, revision rev2){
+    comparation comp1 = LESS;
+    comparation comp2 = LESS;
+    comparation out;
+
+    for(list<change>::iterator it = rev1.begin(); it!=rev1.end(); it++){
+        if (rev2.find(*it) = rev2.end()){
+            comp1 = INCOMP;
+        }
+
+    }
+
+    for(list<change>::iterator it = rev2.begin(); it!=rev2.end(); it++){
+        if (rev1.find(*it) = rev1.end()){
+            comp2 = INCOMP;
+        }
+    }
+
+    if (comp1 == LESS){
+        if (comp2 == LESS){
+            out = EQUAL;
+        } else {
+            out = LESS;
         }
     } else {
-        list<graphlist> children = *(new list<graphlist>);
-        for (list<Vertex*>::iterator kid = v->getChildren().begin(); kid != v->getChildren().end(); kid++){
-            children.push_back(evaMinimals(*kid));
+        if (comp2 == LESS){
+            out = GREATER;
+        } else {
+            out = INCOMP
         }
-        out = organizebeta(v,children);
     }
 
     return out;
-}*/
+}
 
-graphlist WitnessGraph::organizealfa(Vertex* v, list<graphlist> conjuntos){ //9
-    graphlist min = *(new graphlist);
-    min = conjuntos.pop_front();
-    for (list<graphlist>::iterator it = conjuntos.begin(); it!=conjuntos.end();it++){
-        for(graphlist::iterator candidato = (*it).begin(); candidato!=(*it).end();candidato++){
-            graphlist::iterator mini;
-            for(mini = min.begin(); mini!=min.end();mini++){
-                comparacao relacao = compara((*candidato),(*mini));
-                if (relacao == MAIOR){
-                    break;
-                } else if (relacao == IGUAL){
-                    min.push_front((*candidato));
-                    break;
-                } else if (relacao == MENOR){
-                    min.erase(mini);
-                }
-            }
-            if (mini == min.end()){
+revisionlist WitnessGraph::minimals(revisionlist input) {
+    revisionlist min = *(new revisionlist);
+    for (revisionlist::iterator candidate = input.begin(); candidate != input.end(); candidate++) {
+        revisionlist::iterator mini;
+        for (mini = min.begin(); mini != min.end(); mini++) {
+            comparation relation = compare((*candidate), (*mini));
+            if (relation == GREATER) {
+                break;
+            } else if (relation == EQUAL) {
                 min.push_front((*candidato));
+                break;
+            } else if (relation == LESS) {
+                min.erase(mini);
             }
         }
+        if (mini == min.end()) {
+            min.push_front((*candidato));
+        }
     }
-    WitnessGraph* father;
-    graphlist out;
-    for (graphlist::iterator it = min.begin(); it != min.end(); it++){
-        father = new WitnessGraph(v);
-        father->connect(*it);
-        out.push_back(father);
-    }
-    return out;
+
+    return min;
 }
 
 /* int main(int argc , char **argv){

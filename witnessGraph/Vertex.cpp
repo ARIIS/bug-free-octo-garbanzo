@@ -6,12 +6,8 @@ Vertex::Vertex(){
 }
 
 Vertex::Vertex(Vertex* v){
-    this->id = v->getId();
-    if (v->getChildset()==null){
-        this->childset = *(new set<int>);
-    } else {
-        this->childset = v->getChildset();
-    }
+    this->idnum = v->getId();
+    this->childset = *(new set<int>);
 }
 
 Vertex::Vertex(Configuracao* head){

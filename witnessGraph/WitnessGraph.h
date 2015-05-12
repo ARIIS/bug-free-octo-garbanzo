@@ -5,11 +5,22 @@
 #include <vector>
 #include "Vertex.h"
 #include "../refineGame/RefineGame.h"
-#include "Change.h"
 
 class WitnessGraph{
-
-    typedef list<WitnessGraph*> graphlist;
+    struct changeid {
+        int state1;
+        int state2;
+        literalNegativo lit;
+        bool cut;
+    } change;
+    typedef unordered_set<change> revision
+    typedef list<revision> revisionlist;
+    typedef enum {
+        EQUAL;
+        LESS;
+        GREATER;
+        INCOMP;
+    } comparation;
 
 	private:
 		vector<Vertex*> nTV;
@@ -20,9 +31,15 @@ class WitnessGraph{
                 vector<Vertex*> verticesvector;
                 void insertVertex(Vertex* v);
                 Vertex* root;
-                vector<graphlist> vG;
+                vector<revisionlist> vG;
                 static int graphcount;
                 int graphid;
+                revisionlist evaMinimals(Vertex* v);
+                revisionlist evaGraphs(Vertex* v);
+                revisionlist alfa(Vertex* v);
+                revisionlist beta(Vertex* v);
+                comparation compare(revision rev1, revision rev2)
+                revisionlist minimals(revisionlist input);
 
 	public:
 		WitnessGraph();
@@ -34,11 +51,6 @@ class WitnessGraph{
                 void connect(WitnessGraph* sub);
                 list<Vertex*> getVertices();
                 int rootId();
-                graphlist evaMinimals(Vertex* v);
-                graphlist alfa(Vertex* v);
-                graphlist beta(Vertex* v);
-                graphlist arrangealfa(Vertex* v);
-                graphlist arrangebeta(Vertex* v);
 
 };
 
