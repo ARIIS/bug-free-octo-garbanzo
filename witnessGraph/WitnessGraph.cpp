@@ -186,12 +186,12 @@ revisionlist WitnessGraph::evaGraphs(Vertex* v){
 revisionlist WitnessGraph::alfa(Vertex* v){
     revisionlist out = *(new revisionlist);
     if (v->isWitness() && v->getTail()->getConectivo() == C_INDEF){
-        out.push_back(Change::getRevision(v));
+        out.push_back(v->getRevision());
     } else {
         for (list<Vertex*>::iterator kid = v->getChildren().begin(); kid != v->getChildren().end(); kid++){
             revisionlist thiskid = evaGraphs(*kid);
             for (revisionlist::iterator it = thiskid.begin(); it != thiskid.end(); it++){
-                revision aux = Change::getRevision(v);
+                revision aux = v->getRevision();
                 aux.splice(aux.begin(),(*it));
                 out.push_back(aux);
             }

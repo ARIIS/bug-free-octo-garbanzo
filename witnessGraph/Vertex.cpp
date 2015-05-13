@@ -82,19 +82,28 @@ void Vertex::addParent(Vertex* dad){
 	this->parents.push_back(dad);
 }
 
-bool VertexWitness::isWitness(){
-    return true;
-}
-
-Configuracao* VertexWitness::getTail(){
-    return tail;
-}
-
-TipoTransicao VertexWitness::getTransition(){
-    return transition;
-}
-
 Vertex* Vertex::getParent(){
     Vertex* v = parents.front();
     return v;
+}
+
+revision Vertex::getRevision(){
+    revision out = *(new revision);
+    if(this->isWitness()){
+        Conectivo con1 = this->getHead()->getConectivo();
+        Conectivo con2 = this->getTail()->getConectivo();
+        TipoTransicao type = this->getTransition();
+
+        change ch;
+
+        if (con1 == C_OR || C_AND){
+            ch.type = 1;
+            ch.state1 = this-getHead()->getNumEstado();
+            ch.lit = this->getTail()->getLiteralNegativo();
+
+            out.push_back(ch);
+        }
+
+    }
+    return out;
 }

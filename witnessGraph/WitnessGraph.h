@@ -7,14 +7,6 @@
 #include "../refineGame/RefineGame.h"
 
 class WitnessGraph{
-    struct changeid {
-        int state1;
-        int state2;
-        literalNegativo lit;
-        bool cut;
-    } change;
-    typedef unordered_set<change> revision
-    typedef list<revision> revisionlist;
     typedef enum {
         EQUAL;
         LESS;

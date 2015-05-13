@@ -10,6 +10,16 @@ typedef enum {
 	ABELARDO, EVA
 } VertexKind;
 
+typedef struct changeid {
+    int type;
+    int state1;
+    int state2;
+    literalNegativo lit;
+    bool cut;
+} change;
+typedef unordered_set<change> revision
+typedef list<revision> revisionlist;
+
 class Vertex{
 
 private:
@@ -41,6 +51,7 @@ public:
         virtual bool isWitness();
         Vertex* getParent();
         virtual Configuracao* getTail()
+        revisionlist getRevision();
 
 };
 

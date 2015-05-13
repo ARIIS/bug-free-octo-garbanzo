@@ -12,10 +12,14 @@ VertexWitness::VertexWitness(Configuracao* head, Configuracao* tail, TipoTransic
 
 }
 
-Change* VertexWitness::getChange(){
-    return this->mychange;
+bool VertexWitness::isWitness(){
+    return true;
 }
 
-void VertexWitness::insertChange(Change* c){
-    this->mychange = c;
+Configuracao* VertexWitness::getTail(){
+    return tail;
+}
+
+TipoTransicao VertexWitness::getTransition(){
+    return transition;
 }
