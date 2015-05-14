@@ -3,22 +3,26 @@
 
 #include <list>
 #include <vector>
-#include "Vertex.h"
+#include <algorithm>
+#include "../refineGame/Vertex.h"
+#include "../refineGame/VertexWitness.h"
 #include "../refineGame/RefineGame.h"
 
-class WitnessGraph{
-    typedef enum {
-        EQUAL;
-        LESS;
-        GREATER;
-        INCOMP;
+typedef enum {
+        EQUAL,
+        LESS,
+        GREATER,
+        INCOMP,
     } comparation;
+    
+class WitnessGraph{
+    
 
 	private:
 		vector<Vertex*> nTV;
 		set<Configuracao*> visited;
-                list<TestemunhadeFalha> witnesses;
-		bool pertence(Configuracao* ci, Configuracao* cj);
+                list<TestemunhaDeFalha> witnesses;
+		bool match(Configuracao* ci, Configuracao* cj);
 		list<Vertex*> vertices;
                 vector<Vertex*> verticesvector;
                 void insertVertex(Vertex* v);
@@ -30,12 +34,12 @@ class WitnessGraph{
                 revisionlist evaGraphs(Vertex* v);
                 revisionlist alfa(Vertex* v);
                 revisionlist beta(Vertex* v);
-                comparation compare(revision rev1, revision rev2)
+                comparation compare(revision rev1, revision rev2);
                 revisionlist minimals(revisionlist input);
 
 	public:
 		WitnessGraph();
-		WitnessGraph(Arena* a, list<TestemunhadeFalha> w);
+		WitnessGraph(Arena* a, list<TestemunhaDeFalha> w);
                 WitnessGraph(Vertex* v);
 		Vertex* cycleAncestor(Configuracao* ci);
 		Vertex* nextVertex(Configuracao* ci);

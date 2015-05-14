@@ -1,7 +1,7 @@
 #ifndef VERTEXWITNESS_H
 #define VERTEXWITNESS_H value
 
-#include "Vertex.h"
+#include "../refineGame/Vertex.h"
 
 class VertexWitness: public Vertex {
 
@@ -14,6 +14,7 @@ class VertexWitness: public Vertex {
         Configuracao* getTail();
         TipoTransicao getTransition();
         bool isWitness();
+        revision getRevision();
 };
 
 #endif

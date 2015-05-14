@@ -15,9 +15,31 @@ typedef struct changeid {
     int state1;
     int state2;
     literalNegativo lit;
-    bool cut;
 } change;
-typedef unordered_set<change> revision
+
+/*bool setcomp(change ch1, change ch2) {
+    if (ch1.type == ch2.type){
+        if (ch1.state1 == ch2.state1){
+            if (ch1.state2 == ch2.state2){
+                if (ch1.lit.valorLogico == ch2.lit.valorLogico){
+                    return ch1.lit.literal.compare(ch2.lit.literal) < 0;
+                } else {
+                    return ch1.lit.valorLogico && ch2.lit.valorLogico;
+                }
+            } else {
+                return ch1.state2 < ch2.state2;
+            }
+        } else {
+            return ch1.state1 < ch2.state1;
+        }
+    } else {
+        return ch1.type < ch2.type;
+    }
+}
+
+bool(*set_pt)(change,change) = setcomp; */
+
+typedef list<change> revision;
 typedef list<revision> revisionlist;
 
 class Vertex{
@@ -50,9 +72,9 @@ public:
         void setChildset(set<int> input);
         virtual bool isWitness();
         Vertex* getParent();
-        virtual Configuracao* getTail()
-        revisionlist getRevision();
-
+        virtual Configuracao* getTail();
+        virtual revision getRevision();
+        
 };
 
 #endif

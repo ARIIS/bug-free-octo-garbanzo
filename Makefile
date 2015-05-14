@@ -35,7 +35,8 @@ LDFLAGS= -g -o
 TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
 FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
 ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
-SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) Leitor.cpp RefineGame.cpp
+REFINE=RefineGame.cpp Vertex.cpp VertexWitness.cpp WitnessGraph.cpp
+SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) $(REFINE) Leitor.cpp
 GRAMMAR=
 OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
 EXECUTABLE=refiner
@@ -114,9 +115,8 @@ bin/ModelChecking.o: modelChecking/ModelChecking.cpp
 
 # refineGame folder
 
-bin/RefineGame.o: refineGame/RefineGame.cpp
+bin/%.o: refineGame/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
-
 
 # other dependencies
 

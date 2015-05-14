@@ -1,0 +1,4 @@
+bison grammar/grammarFormulas.y -o read/grammarFormulas.tab.c
+make: bison: Command not found
+Makefile:129: recipe for target 'read/grammarFormulas.tab.c' failed
+make: *** [read/grammarFormulas.tab.c] Error 127

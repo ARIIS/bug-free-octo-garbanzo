@@ -1,4 +1,4 @@
-#include "Vertex.h"
+#include "../refineGame/Vertex.h"
 
 Vertex::Vertex(){
 	this->children = *(new list<Vertex*>);
@@ -38,7 +38,7 @@ Configuracao* Vertex::getHead(){
 	return this->head;
 }
 
-virtual Configuracao* Vertex::getTail(){
+Configuracao* Vertex::getTail(){
     return 0;
 }
 
@@ -62,7 +62,7 @@ int Vertex::getId(){
     return idnum;
 }
 
-virtual bool Vertex::isWitness(){
+bool Vertex::isWitness(){
     return false;
 }
 
@@ -88,22 +88,5 @@ Vertex* Vertex::getParent(){
 }
 
 revision Vertex::getRevision(){
-    revision out = *(new revision);
-    if(this->isWitness()){
-        Conectivo con1 = this->getHead()->getConectivo();
-        Conectivo con2 = this->getTail()->getConectivo();
-        TipoTransicao type = this->getTransition();
-
-        change ch;
-
-        if (con1 == C_OR || C_AND){
-            ch.type = 1;
-            ch.state1 = this-getHead()->getNumEstado();
-            ch.lit = this->getTail()->getLiteralNegativo();
-
-            out.push_back(ch);
-        }
-
-    }
-    return out;
+    return *(new revision);
 }
