@@ -34,6 +34,8 @@ class WitnessGraph{
                 revisionlist evaGraphs(Vertex* v);
                 revisionlist alfa(Vertex* v);
                 revisionlist beta(Vertex* v);
+                bool incrementer(vector<revisionlist>* children, vector<revisionlist::iterator>* childrenits, int digit);
+                revision fusion(vector<revisionlist::iterator> childrenits);
                 comparation compare(revision rev1, revision rev2);
                 revisionlist minimals(revisionlist input);
 

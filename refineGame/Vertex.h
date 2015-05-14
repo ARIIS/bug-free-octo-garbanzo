@@ -73,7 +73,9 @@ public:
         virtual bool isWitness();
         Vertex* getParent();
         virtual Configuracao* getTail();
-        virtual revision getRevision();
+        virtual revision getRevision(bool dupli);
+        virtual bool isDuplicated();
+        virtual TipoTransicao getTransition();
         
 };
 

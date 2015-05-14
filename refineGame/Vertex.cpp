@@ -87,6 +87,14 @@ Vertex* Vertex::getParent(){
     return v;
 }
 
-revision Vertex::getRevision(){
+revision Vertex::getRevision(bool dupli){
     return *(new revision);
+}
+
+bool Vertex::isDuplicated(){
+    return false;
+}
+
+TipoTransicao Vertex::getTransition(){
+    return MUST;
 }

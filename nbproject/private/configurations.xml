@@ -106,8 +106,9 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" sandbox/novaentrada</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" sandbox/novaentrada3</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" sandbox/novaentrada</runcommand>
+        <runcommand>"${OUTPUT_PATH}" sandbox/novaentrada3</runcommand>
         <rundir>.</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>
