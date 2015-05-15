@@ -85,11 +85,6 @@ revision VertexWitness::getRevision(bool dupli) {
         } else if (con1 == C_AX) {
             if (type == MAY) {
                 if (dupli) {
-                    ch.type = 5;
-                    ch.state1 = this->getHead()->getNumEstado();
-                    ch.state2 = this->getTail()->getNumEstado();
-                    out.push_back(ch);
-                } else {
                     if (con2 == C_NONE && this->getTail()->getCor() == C_INDEF) {
                         ch.type = 1;
                         ch.state1 = this->getTail()->getNumEstado();
@@ -98,6 +93,13 @@ revision VertexWitness::getRevision(bool dupli) {
                         out.push_back(ch);
 
                     }
+
+                } else {
+
+                    ch.type = 5;
+                    ch.state1 = this->getHead()->getNumEstado();
+                    ch.state2 = this->getTail()->getNumEstado();
+                    out.push_back(ch);
                 }
             } else {
                 if (con2 == C_NONE && this->getTail()->getCor() == C_INDEF && !dupli) {

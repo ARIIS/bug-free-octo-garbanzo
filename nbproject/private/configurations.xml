@@ -93,6 +93,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -107,8 +109,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" sandbox/novaentrada</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" sandbox/novaentrada3</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" sandbox/novaentrada4</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" sandbox/novaentrada3</runcommand>
+        <runcommand>"${OUTPUT_PATH}" sandbox/novaentrada4</runcommand>
         <rundir>.</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>

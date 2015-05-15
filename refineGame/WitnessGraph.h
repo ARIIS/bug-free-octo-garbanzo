@@ -38,6 +38,7 @@ class WitnessGraph{
                 revision fusion(vector<revisionlist::iterator> childrenits);
                 comparation compare(revision rev1, revision rev2);
                 revisionlist minimals(revisionlist input);
+                bool isConsistent(revision input);
 
 	public:
 		WitnessGraph();

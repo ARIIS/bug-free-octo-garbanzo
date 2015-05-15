@@ -39,7 +39,7 @@ Configuracao* Vertex::getHead(){
 }
 
 Configuracao* Vertex::getTail(){
-    return 0;
+    return this->head;
 }
 
 VertexKind Vertex::getKind(){
