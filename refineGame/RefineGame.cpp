@@ -299,17 +299,17 @@ void RefineGame::refineGame(list<TestemunhaDeFalha> testemunhas, SetOperations s
 //
 //        string str ="";
         for(list<Estado*>::iterator itP = this->modelo.begin() ; itP != this->modelo.end() ;itP++){
-            cout << (*itP)->getNome() + " ( "  + (*itP)->imprimirEstado() + " )" << endl;
+            //cout << (*itP)->getNome() + " ( "  + (*itP)->imprimirEstado() + " )" << endl;
         }
 
         for(list<Estado*>::iterator itP = this->modelo.begin() ; itP != this->modelo.end() ;itP++){
 
-            cout << (*itP)->imprimirTransicoes() << endl;
+            //cout << (*itP)->imprimirTransicoes() << endl;
         }
 
 
 
-        cout << "-------------------------------------------------------------------" << endl;
+        //cout << "-------------------------------------------------------------------" << endl;
 //        cout << " ALTERACAO FEITA DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" << endl;
 //        setOperations.print();
     } else if (arena->getCabecasTabuleiro()[0]->getCor() == C_INDEF) {

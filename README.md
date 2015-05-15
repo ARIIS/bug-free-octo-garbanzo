@@ -1,4 +1,4 @@
-
+﻿
 =============
 
 Este projeto tem como objetivo auxiliar o projetista de software logo nas fases iniciais do projeto de desenvolvimento e modelagem do software. A ferramenta possibilita que o projetista modele o comportamento do software frente a informações parciais e verifique se o mesmo atende a determinadas propriedades requeridas. Caso o modelo do sistema não atenda às propriedades, a ferramenta auxiliará o projetista sugerindo e corrigindo modelos do sistema até um que o satisfaça.
@@ -47,7 +47,7 @@ Para manter seu fork sincronizado:
 
 * [Jandson Ribeiro](mailto:jandsonsantos@gmail.com) [@JandsonRibeiro](https://github.com/JandsonRibeiro) [Página Pessoal](https://jandsonribeiro.wordpress.com)
 * [Marino Hohenheim](mailto:intmarinoreturn0@gmail.com) [@Marinofull](https://github.com/Marinofull)
-* Miguel Dias
+* [Miguel Dias](mailto:migueldias1602@gmail.com) [@migueldias](https://github.com/migueldias)
 
 ###Mais Informações
 
