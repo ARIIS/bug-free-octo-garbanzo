@@ -1,7 +1,9 @@
 refiner
+*~
 read/grammarFormulas.tab.c
 read/scanner.h
 read/scanner.c
 bin/*.o
-.project
 sandbox/out-result*
+.project
+nbproject/

@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include "../refineGame/WitnessGraph.h"
 
 
 using namespace std;
@@ -42,5 +43,8 @@ int  main(int argc , char **argv) {
         mc.colorir();
 
         RefineGame rf = *(new RefineGame(ar,lf->lerEstados().size()));
+
+        WitnessGraph wit = *(new WitnessGraph(ar,rf.getFailWitness(ar)));
+
 	return 0;
 }

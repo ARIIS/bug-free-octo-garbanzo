@@ -104,8 +104,8 @@ estado: ESTADO LPAREN listaLiteral RPAREN {Estado *e = new Estado(*$1,*$3);
                                         estadosLidos.push_back(*e);
                                         }
 
-listaLiteral: litNeg listaLiteral { $$ = $2 ; $2->push_back(*$1)}
-            | {$$ = new list<literalNegativo>}
+listaLiteral: litNeg listaLiteral { $$ = $2 ; $2->push_back(*$1);}
+            | {$$ = new list<literalNegativo>;}
 
 litNeg: LITERAL {literalNegativo *l = new literalNegativo;
                     l->literal = *$1;

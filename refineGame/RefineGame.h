@@ -142,6 +142,7 @@ typedef struct SetOperations {
 class RefineGame {
 public:
 
+    list<TestemunhaDeFalha> getFailWitness(Arena *arena);
     RefineGame(Arena *arena, int numEstadosModelo);
     virtual ~RefineGame();
 
@@ -170,7 +171,7 @@ private:
 
     list<SetOperations> modificationsList;
 
-    list<TestemunhaDeFalha> getFailWitness(Arena *arena);
+    //list<TestemunhaDeFalha> getFailWitness(Arena *arena);
 
     void insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator tf);
 
