@@ -6,4 +6,6 @@ read/scanner.c
 bin/*.o
 sandbox/out-result*
 .project
+.cproject
+.settings/
 nbproject/

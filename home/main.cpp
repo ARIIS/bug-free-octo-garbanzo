@@ -46,5 +46,7 @@ int  main(int argc , char **argv) {
 
         WitnessGraph wit = *(new WitnessGraph(ar,rf.getFailWitness(ar)));
 
+        wit.evaMinimals(wit.getRoot());
+
 	return 0;
 }

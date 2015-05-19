@@ -20,8 +20,8 @@ WitnessGraph::WitnessGraph(Arena* a, list<TestemunhaDeFalha> w){
 
 	//this->nTV[0] = new Vertex(czero);
 	//this->insertVertex(this->nTV[0]);
-        //root = nTV[0];
-	if (czero->getConectivo() != C_NONE){
+        root = 0;
+	if (czero->getCor() == C_INDEF){
 		root = nextVertex(czero);
 	}
         this->verticesvector = *(new vector<Vertex*>(vertices.size()));
@@ -36,24 +36,13 @@ WitnessGraph::WitnessGraph(Arena* a, list<TestemunhaDeFalha> w){
             cout << (*it).origem->getNumEstado() << " " << (*it).origem->getConectivo() << " " << (*it).destino->destino->getNumEstado() << " " << (*it).destino->destino->getConectivo() << endl;
             cout << endl;
         }*/
-        evaMinimals(root);
+        //evaMinimals(root);
 
 }
 
-/*WitnessGraph::WitnessGraph(Vertex* v){
-    this->changes = *(new list<Change*>);
-    this->vertices = *(new list<Vertex*>);
-    Vertex* vline;
-    vline = new Vertex(v);
-    root = vline;
-    this->vertices.push_back(vline);
-    this->graphid = graphcount++;
-    if (v->isWitness()){
-        Change *x = v->getChange();
-        this->changes.push_back(x);
-        x->include(graphid);
-    }
-}*/
+Vertex* WitnessGraph::getRoot(){
+    return root;
+}
 
 void WitnessGraph::insertVertex(Vertex* v){
     v->setId(vertices.size());
@@ -121,7 +110,7 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
                     this->createEdge(vi,v);
                 }
 		this->insertVertex(v);
-	} else if (t.size() >= 2){
+	} else if (t.size() >= 2 || ci->getNumNome() == 0){
 
 		v = new Vertex(ci);
 		nTV[ci->getNumNome()] = v;
@@ -205,33 +194,36 @@ int WitnessGraph::rootId(){ //13
 }*/
 
 revisionlist WitnessGraph::evaMinimals(Vertex* v){
-    revisionlist out = minimals(evaGraphs(v));
-    for (revisionlist::iterator it = out.begin(); it!= out.end();it++){
-        cout << "{";
-        for (revision::iterator it1 = (*it).begin(); it1!=(*it).end();it1++){
-            cout << "(" << (*it1).state1 << "s,";
-            if ((*it1).state2 != -1){
-                cout << (*it1).state2 << "s)";
-                if ((*it1).type == 3){
-                    cout << "m ";
+    revisionlist out = *(new revisionlist);
+    if (v != 0) {
+        out = minimals(evaGraphs(v));
+        for (revisionlist::iterator it = out.begin(); it != out.end(); it++) {
+            cout << "{";
+            for (revision::iterator it1 = (*it).begin(); it1 != (*it).end(); it1++) {
+                cout << "(" << (*it1).state1 << "s,";
+                if ((*it1).state2 != -1) {
+                    cout << (*it1).state2 << "s)";
+                    if ((*it1).type == 3) {
+                        cout << "m ";
+                    } else {
+                        cout << "c ";
+                    }
                 } else {
-                    cout << "c ";
+                    if (!(*it1).lit.valorLogico) {
+                        cout << "-";
+                    }
+                    cout << (*it1).lit.literal << ") ";
                 }
-            } else {
-                if (!(*it1).lit.valorLogico){
-                    cout << "-";
-                }
-                cout << (*it1).lit.literal << ") ";
             }
+            cout << "}" << endl;
         }
-        cout << "}" << endl;
     }
     return out;
 }
 
 revisionlist WitnessGraph::evaGraphs(Vertex* v){
     int id = v->getId();
-    //cout << id << endl;
+
     if (vG[id].size() == 0){
         if(v->getKind() == EVA){
             vG[id] = alfa(v);
@@ -278,9 +270,11 @@ revisionlist WitnessGraph::beta(Vertex* v){
         if (aux.size() > 0) {
             out.push_back(aux);
         }
+
         out.push_back(aux1);
+
     }
-    if(!v->isWitness() || (v->getTransition() == MAY && v->getTail()->getConectivo()!=C_NONE)){
+    if(!v->isWitness() || (v->getTail()->getConectivo()!=C_NONE && v->getTail()->getCor() != C_FALSE)){
 
         list<Vertex*> temp = v->getChildren();
         revisionlist aNow = *(new revisionlist);
@@ -289,14 +283,16 @@ revisionlist WitnessGraph::beta(Vertex* v){
         for (list<Vertex*>::iterator kid = temp.begin(); kid != temp.end(); kid++){
             aNext = aNow;
             aNow = *(new revisionlist);
-            //cout << v->getId() << " -> " << (*kid)->getId() << endl;
+
             revisionlist thiskid = evaGraphs(*kid);
             for (revisionlist::iterator it = aNext.begin(); it!=aNext.end();it++){
                 for (revisionlist::iterator it1 = thiskid.begin(); it1 != thiskid.end(); it1++){
                     aux = (*it);
                     aux1 = (*it1);
                     aux.splice(aux.begin(),aux1);
-                    aNow.push_back(aux);
+                    if (isConsistent(aux)) {
+                        aNow.push_back(aux);
+                    }
                 }
             }
 
@@ -304,7 +300,7 @@ revisionlist WitnessGraph::beta(Vertex* v){
         out.splice(out.begin(),aNow);
 
     }
-    //cout << v->getId()<< endl;
+
     return out;
 }
 
@@ -314,10 +310,10 @@ comparation WitnessGraph::compare(revision rev1, revision rev2){
     comparation aux;
     comparation out;
 
-    for(list<change>::iterator it1 = rev1.begin(); it1!=rev1.end(); it1++){
+       for(list<change>::iterator it1 = rev1.begin(); it1!=rev1.end(); it1++){
         aux = INCOMP;
         for(list<change>::iterator it2 = rev2.begin(); it2!=rev2.end(); it2++){
-            if ((*it1).type == (*it2).type && (*it1).state1 == (*it2).state1 && (*it1).state2 == (*it2).state2 && (*it1).lit.literal.compare((*it2).lit.literal) && ((*it1).lit.valorLogico == (*it2).lit.valorLogico)){
+            if ((*it1).type == (*it2).type && (*it1).state1 == (*it2).state1 && (*it1).state2 == (*it2).state2 && (((*it1).type != 1 || (*it1).lit.literal.compare((*it2).lit.literal) == 0 && ((*it1).lit.valorLogico == (*it2).lit.valorLogico)))){
                 aux = LESS;
             }
 
@@ -331,7 +327,7 @@ comparation WitnessGraph::compare(revision rev1, revision rev2){
     for (list<change>::iterator it1 = rev2.begin(); it1 != rev2.end(); it1++) {
         aux = INCOMP;
         for (list<change>::iterator it2 = rev1.begin(); it2 != rev1.end(); it2++) {
-            if ((*it1).type == (*it2).type && (*it1).state1 == (*it2).state1 && (*it1).state2 == (*it2).state2 && (*it1).lit.literal.compare((*it2).lit.literal) && ((*it1).lit.valorLogico == (*it2).lit.valorLogico)) {
+            if ((*it1).type == (*it2).type && (*it1).state1 == (*it2).state1 && (*it1).state2 == (*it2).state2 && ((*it1).type != 1 || ((*it1).lit.literal.compare((*it2).lit.literal) == 0 && ((*it1).lit.valorLogico == (*it2).lit.valorLogico)))) {
                 aux = LESS;
 
             }
@@ -342,7 +338,6 @@ comparation WitnessGraph::compare(revision rev1, revision rev2){
         }
     }
     comp2 = aux;
-
 
 
     if (comp1 == LESS){
@@ -364,21 +359,26 @@ comparation WitnessGraph::compare(revision rev1, revision rev2){
 
 revisionlist WitnessGraph::minimals(revisionlist input) {
     revisionlist min = *(new revisionlist);
+
     for (revisionlist::iterator candidate = input.begin(); candidate != input.end(); candidate++) {
         revisionlist::iterator mini;
+
         for (mini = min.begin(); mini != min.end(); mini++) {
+
             comparation relation = compare((*candidate), (*mini));
 
             if (relation == GREATER) {
                 break;
             } else if (relation == EQUAL) {
-                min.push_front((*candidate));
+                //min.push_front((*candidate));
                 break;
             } else if (relation == LESS) {
-                min.erase(mini);
+                mini = min.erase(mini);
+                mini--;
             }
         }
         if (mini == min.end()) {
+
             min.push_front((*candidate));
         }
 
@@ -387,10 +387,27 @@ revisionlist WitnessGraph::minimals(revisionlist input) {
     return min;
 }
 
+bool WitnessGraph::isComplement(change ch1, change ch2){
+
+    if (ch1.type == 1 && ch2.type == 1){
+
+        return (ch1.lit.literal.compare(ch2.lit.literal) == 0 && (ch1.lit.valorLogico != ch2.lit.valorLogico));
+    } else if (ch1.type + ch2.type == 8){
+
+        return (ch1.state1 == ch2.state1 && ch1.state2 == ch2.state2);
+    } else return false;
+}
+
 bool WitnessGraph::isConsistent(revision input){
     bool out = true;
 
-
+    revision aux = *(new revision);
+    for (revision::iterator it = input.begin(); it != input.end(); it++){
+        for (revision::iterator it1 = aux.begin(); it1 != aux.end(); it1++){
+            out = out && !isComplement((*it),(*it1));
+        }
+        aux.push_back((*it));
+    }
 
     return out;
 }
