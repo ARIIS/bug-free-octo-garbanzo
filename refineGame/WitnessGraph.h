@@ -30,7 +30,6 @@ class WitnessGraph{
                 vector<revisionlist> vG;
                 static int graphcount;
                 int graphid;
-                revisionlist evaMinimals(Vertex* v);
                 revisionlist evaGraphs(Vertex* v);
                 revisionlist alfa(Vertex* v);
                 revisionlist beta(Vertex* v);
@@ -38,18 +37,21 @@ class WitnessGraph{
                 revision fusion(vector<revisionlist::iterator> childrenits);
                 comparation compare(revision rev1, revision rev2);
                 revisionlist minimals(revisionlist input);
+                bool isComplement(change ch1, change ch2);
                 bool isConsistent(revision input);
 
 	public:
 		WitnessGraph();
 		WitnessGraph(Arena* a, list<TestemunhaDeFalha> w);
                 WitnessGraph(Vertex* v);
+                revisionlist evaMinimals(Vertex* v);
 		Vertex* cycleAncestor(Configuracao* ci);
 		Vertex* nextVertex(Configuracao* ci);
 		void createEdge(Vertex* origin, Vertex* destination);
                 void connect(WitnessGraph* sub);
                 list<Vertex*> getVertices();
                 int rootId();
+                Vertex* getRoot();
 
 };
 

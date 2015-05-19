@@ -25,7 +25,7 @@ RefineGame::RefineGame(Arena *arena, int numEstadosModelo) {
 
     this->testemunhasDeFalha = getFailWitness(this->arena);
     // printRelatedFailTable(this->testemunhasDeFalha);
-    startRefine();
+    //startRefine();
 
 }
 
