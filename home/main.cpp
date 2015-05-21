@@ -42,11 +42,11 @@ int  main(int argc , char **argv) {
 
         mc.colorir();
 
-        RefineGame rf = *(new RefineGame(ar,lf->lerEstados().size()));
+        RefineGame rf = *(new RefineGame(ar));
 
         WitnessGraph wit = *(new WitnessGraph(ar,rf.getFailWitness(ar)));
 
-        wit.evaMinimals(wit.getRoot());
+        rf.printAllRevisions(wit.evaMinimals());
 
 	return 0;
 }

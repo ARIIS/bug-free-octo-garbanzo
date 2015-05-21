@@ -11,6 +11,8 @@
 #include "../arena/Arena.h"
 #include "../arena/Configuracao.h"
 #include "../arena/Formula.h"
+#include "../refineGame/Vertex.h"
+#include "../arena/Estado.h"
 // #include "FormulaBinaria.h"
 // #include "FormulaPrefixa.h"
 
@@ -143,7 +145,8 @@ class RefineGame {
 public:
 
     list<TestemunhaDeFalha> getFailWitness(Arena *arena);
-    RefineGame(Arena *arena, int numEstadosModelo);
+    void printAllRevisions(revisionlist input);
+    RefineGame(Arena *arena);
     virtual ~RefineGame();
 
     bool static compConfigsFalhaRelacionadas(FalhasTransicoes t1,
@@ -172,7 +175,8 @@ private:
     list<SetOperations> modificationsList;
 
     //list<TestemunhaDeFalha> getFailWitness(Arena *arena);
-
+    void printModelWithRevision(revision mods);
+    
     void insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator tf);
 
     void printRelatedFailTable(list<TestemunhaDeFalha> testemunhas);

@@ -193,12 +193,14 @@ int WitnessGraph::rootId(){ //13
     this->root.insertChildset(sub->rootId());
 }*/
 
-revisionlist WitnessGraph::evaMinimals(Vertex* v){
+revisionlist WitnessGraph::evaMinimals(){
     revisionlist out = *(new revisionlist);
-    if (v != 0) {
-        out = minimals(evaGraphs(v));
-        for (revisionlist::iterator it = out.begin(); it != out.end(); it++) {
-            cout << "{";
+    if (root != 0) {
+        //int i = 0;
+        out = minimals(evaGraphs(root));
+        /*for (revisionlist::iterator it = out.begin(); it != out.end(); it++) {
+            i++;
+            cout << i << " {";
             for (revision::iterator it1 = (*it).begin(); it1 != (*it).end(); it1++) {
                 cout << "(" << (*it1).state1 << "s,";
                 if ((*it1).state2 != -1) {
@@ -217,6 +219,7 @@ revisionlist WitnessGraph::evaMinimals(Vertex* v){
             }
             cout << "}" << endl;
         }
+        cout << "----------------------------------" << endl << endl;*/
     }
     return out;
 }

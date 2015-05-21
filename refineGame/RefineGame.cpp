@@ -8,24 +8,20 @@
 #include "RefineGame.h"
 #include "../modelChecking/ModelChecking.h"
 
-RefineGame::RefineGame(Arena *arena, int numEstadosModelo) {
-    this->modificationsList = *(new list<SetOperations>);
-    this->arena = arena;
-    this->tabelaFalhasRelacionadas = *(new vector <TabelaConfigsDeFalhaRelacionadas>(numEstadosModelo));
+RefineGame::RefineGame(Arena *arena) {
 
-    //bool (*fn_cmp)(TabelaConfigsDeFalhaRelacionadas, TabelaConfigsDeFalhaRelacionadas) = RefineGame::compConfigsFalhaRelacionadas;
-    bool (*fn_falha)(FalhasLiteral, FalhasLiteral) = RefineGame::comFalhasLiteral;
-    bool (*fn_trans)(FalhasTransicoes, FalhasTransicoes) = RefineGame::compConfigsFalhaRelacionadas;
-    for (int i = 0; i < numEstadosModelo; i++) {
-        this->tabelaFalhasRelacionadas[i].literaisDeFalha =
-                *(new set<FalhasLiteral, bool(*)(FalhasLiteral, FalhasLiteral)>(fn_falha));
-        this->tabelaFalhasRelacionadas[i].transicoesDeFalha =
-                *(new set<FalhasTransicoes, bool(*)(FalhasTransicoes, FalhasTransicoes)>(fn_trans));
+    this->arena = arena;
+
+    list<Estado> *modeloFromArena = this->arena->getModelo();
+
+    map<string, Estado*> mapModeloAuxiliar = *(new map<string, Estado*>);
+    this->modelo = *(new list<Estado*>);
+
+    for (list<Estado>::iterator itEst = modeloFromArena->begin();
+            itEst != modeloFromArena->end(); itEst++) {
+        this->modelo.push_back(&(*itEst));
     }
 
-    this->testemunhasDeFalha = getFailWitness(this->arena);
-    // printRelatedFailTable(this->testemunhasDeFalha);
-    //startRefine();
 
 }
 
@@ -33,10 +29,7 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
 
     list<TestemunhaDeFalha> testemunhasDeFalha = *(new list<TestemunhaDeFalha>);
 
-    testemunhasDeFalha = *(new list<TestemunhaDeFalha>);
-
-
-    set < Configuracao*, bool(*)(Configuracao*, Configuracao*) > configs =
+        set < Configuracao*, bool(*)(Configuracao*, Configuracao*) > configs =
             arena->getIndefinedConfigs();
 
     list<Configuracao::TransicaoConfig*> testemunhas =
@@ -66,9 +59,9 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                 transConf->isMust = it2->isMust;
                 tFalha.destino = transConf; //&(*it2);
                 testemunhasDeFalha.push_back(tFalha);
-                list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
-                itAux--;
-                insertIntoRelatedFailTable(itAux);
+                //list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
+                //itAux--;
+                //insertIntoRelatedFailTable(itAux);
 
                 if ((*it)->getConectivo() == C_AX && !it2->isMust) {
                     tFalha = *(new TestemunhaDeFalha);
@@ -79,9 +72,9 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                     transConf->isMust = it2->isMust;
                     tFalha.destino = transConf; //&(*it2);
                     testemunhasDeFalha.push_back(tFalha);
-                    list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
-                    itAux--;
-                    insertIntoRelatedFailTable(itAux);
+                    //list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
+                    //itAux--;
+                    //insertIntoRelatedFailTable(itAux);
                 }
 
             } else if (((*it)->getConectivo() == C_AX ||
@@ -93,8 +86,8 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
                         it2->destino->getCor() == C_INDEF)) ||
                         ((*it)->getConectivo() == C_EX &&
                         (it2->destino->getCor() == C_TRUE
-                        || (it2->destino->getCor() == C_INDEF &&
-                        it2->destino->isMaxFixPoint())))
+                        || (it2->destino->getCor() == C_INDEF/* &&
+                        it2->destino->isMaxFixPoint()*/)))
                         ) {
 
                     tFalha = *(new TestemunhaDeFalha);
@@ -107,9 +100,9 @@ list<TestemunhaDeFalha> RefineGame::getFailWitness(Arena *arena) {
 
                     //cout << " ++++++++++++++++++++++++++++++++++++++++  " << tFalha.destino->destino->toStr() << endl;
                     testemunhasDeFalha.push_back(tFalha);
-                    list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
-                    itAux--;
-                    insertIntoRelatedFailTable(itAux);
+                    //list<TestemunhaDeFalha>::iterator itAux = testemunhasDeFalha.end();
+                    //itAux--;
+                    //insertIntoRelatedFailTable(itAux);
                 }
 
             }
@@ -192,6 +185,63 @@ void RefineGame::printRelatedFailTable(list<TestemunhaDeFalha> testemunhas) {
 
 }
 
+void RefineGame::printModelWithRevision(revision mods){
+    map<string,bool> usedliterals;
+    for (list<Estado*>::iterator it = modelo.begin(); it != modelo.end(); it++){
+        cout << (*it)->getNome() << "( " << (*it)->imprimirEstado();
+        usedliterals = *(new map<string,bool>);
+        for (revision::iterator it1 = mods.begin(); it1 != mods.end(); it1++){
+            if ((*it1).type == 1 && (*it1).state1 == arena->namesToNumEstates((*it)->getNome()) && usedliterals.find((*it1).lit.literal) == usedliterals.end()){
+                if (!((*it1).lit.valorLogico)){
+                    cout << "not ";
+                }
+
+                cout << (*it1).lit.literal << " ";
+                usedliterals[(*it1).lit.literal] = (*it1).lit.valorLogico;
+            }
+        }
+        cout << ")" << endl;
+    }
+    int state1,state2;
+    bool cut, must;
+    list<Estado::Transicao> transitions;
+    for (list<Estado*>::iterator it = modelo.begin(); it != modelo.end(); it++){
+        transitions = (*it)->getTransicoes();
+        for (list<Estado::Transicao>::iterator it1 = transitions.begin(); it1 != transitions.end(); it1++){
+            cut = false;
+            must = false;
+            state1 = arena->namesToNumEstates((*it)->getNome());
+            state2 = arena->namesToNumEstates((*it1).filho->getNome());
+            for (revision::iterator it2 = mods.begin(); it2 != mods.end(); it2++){
+                if (it2->state1 == state1 && it2->state2 == state2){
+                    cut = it2->type == 5;
+                    must = !cut;
+                }
+            }
+            if (!cut){
+                cout << "(" << (*it)->getNome() << "," << it1->filho->getNome() << ") : ";
+                if ((it1)->tipo == MUST || must){
+                    cout << "+";
+                } else {
+                    cout << "-";
+                }
+                cout << endl;
+            }
+
+        }
+    }
+}
+
+void RefineGame::printAllRevisions(revisionlist input){
+    int i = 0;
+    for (revisionlist::iterator it = input.begin(); it != input.end(); it++){
+        i++;
+        cout << i << "."<< endl << endl;
+        printModelWithRevision(*it);
+        cout << endl << "----------------------------------------------------------" << endl;
+    }
+}
+
 void RefineGame::startRefine() {
 
     list<Configuracao*> matriz = this->arena->getMatrizConfiguracao();
@@ -206,7 +256,7 @@ void RefineGame::startRefine() {
     }
 
     //printRelatedFailTable(this->testemunhasDeFalha);
-
+/*
     for (list<TestemunhaDeFalha>::iterator itFails = this->testemunhasDeFalha.begin();
             itFails != this->testemunhasDeFalha.end(); itFails++) {
 
@@ -217,7 +267,7 @@ void RefineGame::startRefine() {
         OperationStruct ops = refinePLay(*itFails);
         undoOperation(this->modelo, ops);
 
-    }
+    }*/
 
     //Arena *ar = new Arena(*(this->arena->getModelo()), this->arena->getForm());
 
