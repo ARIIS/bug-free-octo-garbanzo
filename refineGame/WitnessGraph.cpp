@@ -21,15 +21,17 @@ WitnessGraph::WitnessGraph(Arena* a, list<TestemunhaDeFalha> w){
 	//this->nTV[0] = new Vertex(czero);
 	//this->insertVertex(this->nTV[0]);
         root = 0;
+
 	if (czero->getCor() == C_INDEF){
+
 		root = nextVertex(czero);
 	}
         this->verticesvector = *(new vector<Vertex*>(vertices.size()));
-        this->vG = *(new vector<revisionlist>(vertices.size()));
+        this->vG = *(new vector<bool>(vertices.size()));
         for(list<Vertex*>::iterator it = vertices.begin(); it != vertices.end();it++){
 
             verticesvector[(*it)->getId()] = (*it);
-            vG[(*it)->getId()] = *(new revisionlist);
+            vG[(*it)->getId()] = false;
         }
 
         /*for (list<TestemunhaDeFalha>::iterator it = this->witnesses.begin(); it!= this->witnesses.end(); it++){
@@ -45,8 +47,10 @@ Vertex* WitnessGraph::getRoot(){
 }
 
 void WitnessGraph::insertVertex(Vertex* v){
+
     v->setId(vertices.size());
     vertices.push_back(v);
+    v->setComponent(this->currentconnective);
 }
 
 void WitnessGraph::createEdge(Vertex* origin, Vertex* destination){
@@ -56,6 +60,7 @@ void WitnessGraph::createEdge(Vertex* origin, Vertex* destination){
 }
 
 Vertex* WitnessGraph::cycleAncestor(Configuracao* ci){
+
 	if (nTV[ci->getNumNome()]==0){
 		Configuracao* cj;
 		list<Configuracao::TransicaoConfig> kids = ci->getFilhos();
@@ -81,10 +86,15 @@ bool WitnessGraph::match(Configuracao* ci, Configuracao* cj){
 }
 
 Vertex* WitnessGraph::nextVertex(Configuracao* ci){
+
+    if (ci->getConectivo() == C_MAXPT || ci->getConectivo() == C_MINPT) {
+        this->currentconnective = ci->getConectivo();
+    }
 	this->visited.insert(ci);
 	list<Configuracao::TransicaoConfig> t = *(new list<Configuracao::TransicaoConfig>);
 	list<Configuracao::TransicaoConfig> kids = ci->getFilhos();
 	for (list<Configuracao::TransicaoConfig>::iterator it = kids.begin(); it != kids.end(); it++){
+
 			if ((*it).destino->getCor() == C_INDEF || match(ci,(*it).destino)){
 				t.push_back((*it));
 			}
@@ -92,6 +102,7 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
 
 	TipoTransicao type;
 	Vertex* v;
+
 
 	if (t.size() == 1 && match(ci,t.front().destino)){
 
@@ -127,7 +138,7 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
 		} else {
 			type = MAY;
 		}
-		if (t.size() > 1 && (cj->getCor() != C_INDEF || cj->getConectivo() == C_NONE)){
+		if (t.size() > 1 && (cj->getCor() != C_INDEF || cj->isLiteral())){
 
 			newv = new VertexWitness(ci,cj,type,this->witnesses);
 
@@ -136,12 +147,13 @@ Vertex* WitnessGraph::nextVertex(Configuracao* ci){
 
 
 		} else {
-			if (cj->getCor() == C_INDEF && cj->getConectivo() != C_NONE){
+			if (cj->getCor() == C_INDEF && !cj->isLiteral()){
 
-				//newv = nTV[ci->getNumNome()];
+				newv = nTV[ci->getNumNome()];
 				if (visited.find(cj) != visited.end()){
 
 					newv = cycleAncestor(cj);
+
 				} else {
 
 					newv = nextVertex(cj);
@@ -197,6 +209,7 @@ revisionlist WitnessGraph::evaMinimals(){
     revisionlist out = *(new revisionlist);
     if (root != 0) {
         //int i = 0;
+
         out = minimals(evaGraphs(root));
         /*for (revisionlist::iterator it = out.begin(); it != out.end(); it++) {
             i++;
@@ -226,48 +239,63 @@ revisionlist WitnessGraph::evaMinimals(){
 
 revisionlist WitnessGraph::evaGraphs(Vertex* v){
     int id = v->getId();
+    revisionlist out;
 
-    if (vG[id].size() == 0){
-        if(v->getKind() == EVA){
-            vG[id] = alfa(v);
-        } else {
-            vG[id] = beta(v);
-        }
+    if (v->getKind() == EVA) {
+        out = alfa(v);
+    } else {
+        out = beta(v);
     }
+    
+    return out;
 
-    return vG[id];
 }
 
 revisionlist WitnessGraph::alfa(Vertex* v){
+    this->vG[v->getId()] = true;
     revisionlist out = *(new revisionlist);
     revision aux;
-    if (v->isWitness() && v->getTail()->getConectivo() == C_NONE){
+    if (v->isWitness() && v->getTail()->isLiteral()){
         out.push_back(v->getRevision(false));
     } else {
         list<Vertex*> temp = v->getChildren();
+        revisionlist thiskid;
+        if (temp.size() == 0){
+            out.push_back(v->getRevision(false));
+        }
         for (list<Vertex*>::iterator kid = temp.begin(); kid != temp.end(); kid++){
-            revisionlist thiskid = evaGraphs(*kid);
-            for (revisionlist::iterator it = thiskid.begin(); it != thiskid.end(); it++){
 
-                if (v->isWitness()){
-                    aux = v->getRevision(false);
+
+                if (!(this->vG[(*kid)->getId()])) {
+                    thiskid = evaGraphs(*kid);
                 } else {
-                    aux = *(new revision);
+                    thiskid = *(new revisionlist);
+                    if (v->getComponent() == C_MAXPT){
+                        thiskid.push_back(*(new revision));
+                    }
                 }
-                aux.splice(aux.begin(),(*it));
-                out.push_back(aux);
-            }
+                for (revisionlist::iterator it = thiskid.begin(); it != thiskid.end(); it++) {
+
+                    if (v->isWitness()) {
+                        aux = v->getRevision(false);
+                    } else {
+                        aux = *(new revision);
+                    }
+                    aux.splice(aux.begin(), (*it));
+                    out.push_back(aux);
+                }
+
         }
     }
-
+    this->vG[v->getId()] = false;
     return out;
 }
 
 revisionlist WitnessGraph::beta(Vertex* v){
-
+    this->vG[v->getId()] = true;
     revisionlist out = *(new revisionlist);
     revision aux,aux1;
-    if (v->getTail()->getConectivo()==C_NONE || (v->isWitness() && v->getTransition() == MAY)){
+    if (v->getTail()->isLiteral() || (v->isWitness() && v->getTransition() == MAY)){
         aux = v->getRevision(true);
         aux1 = v->getRevision(false);
         if (aux.size() > 0) {
@@ -277,33 +305,45 @@ revisionlist WitnessGraph::beta(Vertex* v){
         out.push_back(aux1);
 
     }
-    if(!v->isWitness() || (v->getTail()->getConectivo()!=C_NONE && v->getTail()->getCor() != C_FALSE)){
+    if(!v->isWitness() || (!v->getTail()->isLiteral() && v->getTail()->getCor() != C_FALSE)){
 
         list<Vertex*> temp = v->getChildren();
         revisionlist aNow = *(new revisionlist);
         revisionlist aNext;
         aNow.push_back(*(new revision));
-        for (list<Vertex*>::iterator kid = temp.begin(); kid != temp.end(); kid++){
-            aNext = aNow;
-            aNow = *(new revisionlist);
+        for (list<Vertex*>::iterator kid = temp.begin(); kid != temp.end(); kid++) {
 
-            revisionlist thiskid = evaGraphs(*kid);
-            for (revisionlist::iterator it = aNext.begin(); it!=aNext.end();it++){
-                for (revisionlist::iterator it1 = thiskid.begin(); it1 != thiskid.end(); it1++){
-                    aux = (*it);
-                    aux1 = (*it1);
-                    aux.splice(aux.begin(),aux1);
-                    if (isConsistent(aux)) {
-                        aNow.push_back(aux);
+                aNext = aNow;
+                aNow = *(new revisionlist);
+
+                revisionlist thiskid;
+                if (!(this->vG[(*kid)->getId()])) {
+                    thiskid = evaGraphs(*kid);
+                } else {
+                    thiskid = *(new revisionlist);
+
+                    if (v->getComponent() == C_MAXPT){
+                        thiskid.push_back(*(new revision));
+                    }
+
+                }
+                for (revisionlist::iterator it = aNext.begin(); it != aNext.end(); it++) {
+                    for (revisionlist::iterator it1 = thiskid.begin(); it1 != thiskid.end(); it1++) {
+                        aux = (*it);
+                        aux1 = (*it1);
+                        aux.splice(aux.begin(), aux1);
+                        if (isConsistent(aux)) {
+                            aNow.push_back(aux);
+                        }
                     }
                 }
-            }
+
 
         }
         out.splice(out.begin(),aNow);
 
     }
-
+    this->vG[v->getId()] = false;
     return out;
 }
 

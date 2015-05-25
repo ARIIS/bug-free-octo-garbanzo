@@ -20,6 +20,7 @@ class WitnessGraph{
 	private:
                 
 		vector<Vertex*> nTV;
+                Conectivo currentconnective;
 		set<Configuracao*> visited;
                 list<TestemunhaDeFalha> witnesses;
 		bool match(Configuracao* ci, Configuracao* cj);
@@ -27,7 +28,7 @@ class WitnessGraph{
                 vector<Vertex*> verticesvector;
                 void insertVertex(Vertex* v);
                 Vertex* root;
-                vector<revisionlist> vG;
+                vector<bool> vG;
                 static int graphcount;
                 int graphid;
                 revisionlist evaGraphs(Vertex* v);
