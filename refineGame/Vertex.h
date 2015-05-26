@@ -69,7 +69,7 @@ public:
 	list<Vertex*> getChildren();
 	list<Vertex*> getParents();
 	void addChild(Vertex* child);
-	void addParent(Vertex* dad);
+	void addParent(Vertex* parent);
         set<int> getChildset();
         void insertChildset(int child);
         void setChildset(set<int> input);

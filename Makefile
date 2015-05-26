@@ -32,7 +32,7 @@ CC=g++
 # CFLAGS= -c -Wall
 CFLAGS= -c
 LDFLAGS= -g -o
-TREE=lib/VisitTree.cpp lib/VisitConfiguracao.cpp lib/Path.cpp
+TREE=VisitTree.cpp VisitConfiguracao.cpp Path.cpp
 FORMULAS=Formula.cpp FormulaBinaria.cpp FormulaLiteral.cpp FormulaVariavel.cpp FormulaPrefixa.cpp FormulaPontoFixo.cpp
 ARENA=Configuracao.cpp Componente.cpp Arena.cpp Estado.cpp
 REFINE=RefineGame.cpp Vertex.cpp VertexWitness.cpp WitnessGraph.cpp
@@ -56,67 +56,33 @@ $(EXECUTABLE): $(OBJECTS)
 # if you want undone this comment and comment the other ones, you can do, but i prefer keep the things as it is
 #
 
-bin/main.o: home/main.cpp
+bin/%.o: home/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 # lib folder
 bin/%.o: lib/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-# bin/VisitConfiguracao.o: lib/VisitConfiguracao.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/Path.o: lib/Path.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
 # arena folder
 
 bin/%.o: arena/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-# bin/Estado.o: arena/Estado.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/Configuracao.o: arena/Configuracao.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/Componente.o: arena/Componente.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-
-# bin/Formula.o: arena/Formula.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/FormulaBinaria.o: arena/FormulaBinaria.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/FormulaLiteral.o: arena/FormulaLiteral.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/FormulaVariavel.o: arena/FormulaVariavel.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/FormulaPrefixa.o: arena/FormulaPrefixa.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-# bin/FormulaPontoFixo.o: arena/FormulaPontoFixo.cpp
-# 	$(CC) $(CFLAGS) $< -o $@
-
-
 # read folder
 
-bin/Leitor.o: read/Leitor.cpp
+bin/%.o: read/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 # modelChecking folder
 
-bin/ModelChecking.o: modelChecking/ModelChecking.cpp
+bin/%.o: modelChecking/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 # refineGame folder
 
 bin/%.o: refineGame/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
+
 
 # other dependencies
 
@@ -149,5 +115,5 @@ cleanTestResult:
 
 help:
 	@echo "type 'make' to compile the toll"
-	@echo "type 'make clean' to clear the binaries and grammar files"
+	@echo "type 'make clean' to clear the binaries, grammar files and tests flags"
 	@echo "to run, type './refiner input'"

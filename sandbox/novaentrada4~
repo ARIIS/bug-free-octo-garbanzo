@@ -1,6 +1,0 @@
-(p and q) and (AX (p and (AX q)))
-0s(  )
-1s( q )
-(0s,1s) : +
-(1s,1s) : -
-(1s,0s) : -

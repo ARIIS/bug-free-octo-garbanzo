@@ -4,7 +4,7 @@
 Este projeto tem como objetivo auxiliar o projetista de software logo nas fases iniciais do projeto de desenvolvimento e modelagem do software. A ferramenta possibilita que o projetista modele o comportamento do software frente a informações parciais e verifique se o mesmo atende a determinadas propriedades requeridas. Caso o modelo do sistema não atenda às propriedades, a ferramenta auxiliará o projetista sugerindo e corrigindo modelos do sistema até um que o satisfaça.
 
 * [Contribua com o projeto](#contribua-com-o-projeto)
-* [Dependêcias](#dependêcias)
+* [Dependências](#dependêcias)
 * [Instalação](#instalação)
 * [Time de Desenvolvimento](#time-de-desenvolvimento)
 * [Mais Informações](#mais-informações)
@@ -31,7 +31,7 @@ Para manter seu fork sincronizado:
 * `git push origin master`
 * [leia mais](https://help.github.com/articles/syncing-a-fork/)
 
-###Dependêcias
+###Dependências
 
 * g++
 * bison
