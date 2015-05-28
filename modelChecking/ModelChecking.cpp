@@ -142,8 +142,10 @@ void ModelChecking::colorir() {
             if (lv == L_INDEFINED) {
                 confComp.front()->setCor(C_INDEF);
             } else {
-                if (confComp.front()->getLiteralNegativo().valorLogico &&
-                        lv == L_TRUE) {
+
+                if ((confComp.front()->getLiteralNegativo().valorLogico &&
+                        lv == L_TRUE) || (!confComp.front()->getLiteralNegativo().valorLogico &&
+                        lv == L_FALSE)) {
                     confComp.front()->setCor(C_TRUE);
                 } else {
                     confComp.front()->setCor(C_FALSE);
@@ -249,8 +251,10 @@ void ModelChecking::colorirFase_1(Configuracao *configuracao) {
 
         switch (configuracao->getConectivo()) {
             case C_AX:
+
                 for (list<Configuracao::TransicaoConfig>::iterator it = filhos.begin();
                         it != filhos.end(); it++) {
+
                     if (it->isMust && it->destino->getCor() == C_FALSE) {
                         configuracao->setCor(C_FALSE);
                         this->componentes[configuracao->getNumComponente()]->incrementNumConfiguracoesColoridos();
@@ -286,6 +290,7 @@ void ModelChecking::colorirFase_1(Configuracao *configuracao) {
                 Configuracao *filho1, *filho2;
                 filho1 = configuracao->getFilhos().front().destino;
                 filho2 = configuracao->getFilhos().back().destino;
+
 
                 if (filho1->getCor() == C_TRUE && filho2->getCor() == C_TRUE) {
                     configuracao->setCor(C_TRUE);
@@ -402,7 +407,9 @@ void ModelChecking::colorirFase_2(int posComponente) {
     list<Configuracao*> naoColoridos;
 
     for (list<Configuracao*>::iterator it = configuracoes.begin(); it != configuracoes.end(); it++) {
+
         if ((*it)->getCor() == C_UNCOLORED) {
+
             naoColoridos.push_back(*it);
         }
         if ((*it)->getConectivo() == C_NONE && (*it)->getFilhos().size() == 1) {
@@ -420,6 +427,7 @@ void ModelChecking::colorirFase_2(int posComponente) {
 
     for (list<Configuracao*>::iterator it = naoColoridos.begin();
             it != naoColoridos.end(); it++) {
+
         colorirRegras_2a(*it, tipoTestemunha, &pilhaTemporaria);
     }
 
@@ -560,6 +568,7 @@ void ModelChecking::colorirRegras_2a(Configuracao* configuracao, Conectivo tipoT
 
                 for (list<Configuracao::TransicaoConfig>::iterator it = filhos.begin();
                         it != filhos.end(); it++) {
+
                     if (it->destino->getCor() == C_FALSE || it->destino->getCor() == C_INDEF) {
                         configuracao->setCor(C_INDEF);
                         this->componentes[configuracao->getNumComponente()]->incrementNumConfiguracoesColoridos();
@@ -616,8 +625,13 @@ void ModelChecking::colorirRegras_2a(Configuracao* configuracao, Conectivo tipoT
 
             case C_OR:
 
+                filho1 = configuracao->getFilhos().front().destino;
+                filho2 = configuracao->getFilhos().back().destino;
+
                 if (filho1->getCor() != C_UNCOLORED && filho2->getCor() != C_UNCOLORED) {
+
                     if (filho1->getCor() == C_INDEF || filho2->getCor() == C_INDEF) {
+
                         configuracao->setCor(C_INDEF);
                         this->componentes[configuracao->getNumComponente()]->incrementNumConfiguracoesColoridos();
                         this->coloredConfigs.push(configuracao);

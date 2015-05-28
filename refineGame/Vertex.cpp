@@ -30,6 +30,14 @@ void Vertex::insertChildset(int child){
     childset.insert(child);
 }
 
+void Vertex::setComponent(Conectivo input){
+    this->component = input;
+}
+
+Conectivo Vertex::getComponent(){
+    return this->component;
+}
+
 void Vertex::setChildset(set<int> input){
     childset = input;
 }

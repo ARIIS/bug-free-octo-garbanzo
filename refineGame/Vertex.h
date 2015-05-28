@@ -51,6 +51,7 @@ private:
 	list<Vertex*> parents;
         int idnum;
         set<int> childset;
+        Conectivo component;
 
 public:
 
@@ -63,6 +64,8 @@ public:
 	void setKind(VertexKind kind);
         void setId(int id);
         int getId();
+        void setComponent(Conectivo input);
+        Conectivo getComponent();
 	list<Vertex*> getChildren();
 	list<Vertex*> getParents();
 	void addChild(Vertex* child);

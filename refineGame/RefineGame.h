@@ -11,6 +11,8 @@
 #include "../arena/Arena.h"
 #include "../arena/Configuracao.h"
 #include "../arena/Formula.h"
+#include "../refineGame/Vertex.h"
+#include "../arena/Estado.h"
 // #include "FormulaBinaria.h"
 // #include "FormulaPrefixa.h"
 
@@ -143,24 +145,10 @@ class RefineGame {
 public:
 
     list<TestemunhaDeFalha> getFailWitness(Arena *arena);
-    RefineGame(Arena *arena, int numEstadosModelo);
+    void printAllRevisions(revisionlist input);
+    RefineGame(Arena *arena);
     virtual ~RefineGame();
 
-    bool static compConfigsFalhaRelacionadas(FalhasTransicoes t1,
-            FalhasTransicoes t2) {
-
-        return t1.numEstado < t2.numEstado;
-
-    }
-
-    bool static comFalhasLiteral(FalhasLiteral ft1, FalhasLiteral ft2) {
-        string str1, str2;
-
-        str1 = (*(ft1.confLiterais.begin()))->getLiteralNegativo().literal;
-        str2 = (*(ft2.confLiterais.begin()))->getLiteralNegativo().literal;
-
-        return str1.compare(str2) < 0;
-    }
 
 private:
 
@@ -172,19 +160,9 @@ private:
     list<SetOperations> modificationsList;
 
     //list<TestemunhaDeFalha> getFailWitness(Arena *arena);
-
-    void insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator tf);
-
-    void printRelatedFailTable(list<TestemunhaDeFalha> testemunhas);
-
-    void startRefine();
-
-    void applyOperation(list<Estado*> modelo, OperationStruct operation);
-    void undoOperation(list<Estado*> modelo, OperationStruct operation);
-
-    void refineGame(list<TestemunhaDeFalha> testemunhas, SetOperations setOperations);
-    OperationStruct refinePLay(TestemunhaDeFalha testemunha);
-
+    void printModelWithRevision(revision mods);
+    
+    
     list<Estado> prepareModelToArena();
 
 

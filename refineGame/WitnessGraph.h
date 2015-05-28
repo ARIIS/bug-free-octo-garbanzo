@@ -6,7 +6,6 @@
 #include <algorithm>
 #include "../refineGame/Vertex.h"
 #include "../refineGame/VertexWitness.h"
-#include "../refineGame/RefineGame.h"
 
 typedef enum {
         EQUAL,
@@ -19,7 +18,9 @@ class WitnessGraph{
     
 
 	private:
+                
 		vector<Vertex*> nTV;
+                Conectivo currentconnective;
 		set<Configuracao*> visited;
                 list<TestemunhaDeFalha> witnesses;
 		bool match(Configuracao* ci, Configuracao* cj);
@@ -27,7 +28,7 @@ class WitnessGraph{
                 vector<Vertex*> verticesvector;
                 void insertVertex(Vertex* v);
                 Vertex* root;
-                vector<revisionlist> vG;
+                vector<bool> vG;
                 static int graphcount;
                 int graphid;
                 revisionlist evaGraphs(Vertex* v);
@@ -44,7 +45,7 @@ class WitnessGraph{
 		WitnessGraph();
 		WitnessGraph(Arena* a, list<TestemunhaDeFalha> w);
                 WitnessGraph(Vertex* v);
-                revisionlist evaMinimals(Vertex* v);
+                revisionlist evaMinimals();
 		Vertex* cycleAncestor(Configuracao* ci);
 		Vertex* nextVertex(Configuracao* ci);
 		void createEdge(Vertex* origin, Vertex* destination);
