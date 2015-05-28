@@ -149,21 +149,6 @@ public:
     RefineGame(Arena *arena);
     virtual ~RefineGame();
 
-    bool static compConfigsFalhaRelacionadas(FalhasTransicoes t1,
-            FalhasTransicoes t2) {
-
-        return t1.numEstado < t2.numEstado;
-
-    }
-
-    bool static comFalhasLiteral(FalhasLiteral ft1, FalhasLiteral ft2) {
-        string str1, str2;
-
-        str1 = (*(ft1.confLiterais.begin()))->getLiteralNegativo().literal;
-        str2 = (*(ft2.confLiterais.begin()))->getLiteralNegativo().literal;
-
-        return str1.compare(str2) < 0;
-    }
 
 private:
 
@@ -177,18 +162,7 @@ private:
     //list<TestemunhaDeFalha> getFailWitness(Arena *arena);
     void printModelWithRevision(revision mods);
     
-    void insertIntoRelatedFailTable(list<TestemunhaDeFalha>::iterator tf);
-
-    void printRelatedFailTable(list<TestemunhaDeFalha> testemunhas);
-
-    void startRefine();
-
-    void applyOperation(list<Estado*> modelo, OperationStruct operation);
-    void undoOperation(list<Estado*> modelo, OperationStruct operation);
-
-    void refineGame(list<TestemunhaDeFalha> testemunhas, SetOperations setOperations);
-    OperationStruct refinePLay(TestemunhaDeFalha testemunha);
-
+    
     list<Estado> prepareModelToArena();
 
 
