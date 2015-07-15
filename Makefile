@@ -39,7 +39,7 @@ REFINE=RefineGame.cpp Vertex.cpp VertexWitness.cpp WitnessGraph.cpp
 SOURCES=main.cpp ModelChecking.cpp $(ARENA) $(FORMULAS) $(TREE) $(REFINE) Leitor.cpp
 GRAMMAR=
 OBJECTS=$(addprefix bin/,$(notdir $(SOURCES:.cpp=.o)))
-EXECUTABLE=refiner
+EXECUTABLE=ariis
 
 
 all: grammarlexic bin/ $(EXECUTABLE)
@@ -116,4 +116,4 @@ cleanTestResult:
 help:
 	@echo "type 'make' to compile the toll"
 	@echo "type 'make clean' to clear the binaries, grammar files and tests flags"
-	@echo "to run, type './refiner input'"
+	@echo "to run, type './ariis input'"
