@@ -41,7 +41,7 @@ Para manter seu fork sincronizado:
 
 1)`make`
 
-2)`./refiner input`
+2)`./ariis input`
 
 ###Time de Desenvolvimento
 
