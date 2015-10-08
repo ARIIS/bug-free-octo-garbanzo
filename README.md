@@ -1,4 +1,4 @@
-﻿
+﻿[Home Page](http://homes.dcc.ufba.br/~marino/ariis/en)
 =============
 
 Este projeto tem como objetivo auxiliar o projetista de software logo nas fases iniciais do projeto de desenvolvimento e modelagem do software. A ferramenta possibilita que o projetista modele o comportamento do software frente a informações parciais e verifique se o mesmo atende a determinadas propriedades requeridas. Caso o modelo do sistema não atenda às propriedades, a ferramenta auxiliará o projetista sugerindo e corrigindo modelos do sistema até um que o satisfaça.
