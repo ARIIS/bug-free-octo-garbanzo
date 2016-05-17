@@ -1,4 +1,3 @@
-# g++ main.cpp hello.cpp factorial.cpp -o hello
 
 #target: dependencies
 #   system command
@@ -11,7 +10,7 @@ CC=g++
 CFLAGS= -c -Wall
 LDFLAGS= -g -o
 
-all: grammar lexic parser
+all: grammar lexic ariis
 
 grammar:
 	bison grammarFormulas.y
@@ -20,7 +19,7 @@ lexic:
 	flex lexicoFormulas.lex
 
 parser: main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o
-	$(CC) main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o -o parser
+	$(CC) main.o Configuracao.o Estado.o Formula.o Leitor.o ModelChecking.o RefineGame.o VisitTree.o -o ariis
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
